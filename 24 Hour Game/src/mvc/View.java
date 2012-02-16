@@ -60,7 +60,7 @@ public class View extends Thread {
 	/* 
 	 * Stuff for smooth camera movement and automatic camera movement
 	 */
-	public static final float CAMERAVELOCITYPRESERVATION = 0.95f; //camera velocity to be preserved at each frame
+	public static final float CAMERAVELOCITYPRESERVATION = 0.90f; //camera velocity to be preserved at each frame
 	//attraction to focal point (0 will result in no attraction; higher values may make the view jumpy)
 	public static final float FOCALPOINTATTRACTION = 0.01f;
 	Vector3D cameraVelocity;
