@@ -57,6 +57,14 @@ public class View extends Thread {
 	
 	TrueTypeFont defaultFont;
 
+	/* 
+	 * Stuff for smooth camera movement and automatic camera movement
+	 */
+	public static final float CAMERAVELOCITYPRESERVATION = 0.95f; //camera velocity to be preserved at each frame
+	//attraction to focal point (0 will result in no attraction; higher values may make the view jumpy)
+	public static final float FOCALPOINTATTRACTION = 0.01f;
+	Vector3D cameraVelocity;
+	Vector3D focalPoint;
 	
 	@SuppressWarnings("deprecation")
 	public View(Model model){
@@ -71,6 +79,9 @@ public class View extends Thread {
 		}
 		
 		textureLoader = new TextureLoader();
+		
+		cameraVelocity = new Vector3D(0, 0, 0);
+		focalPoint = new Vector3D(100, 100, 700);
 	}
 	
 	/*
@@ -81,6 +92,13 @@ public class View extends Thread {
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 
+		/*
+		 * Calculate camera velocity from user input, focal point and residue 
+		 * then add it to the view translation.
+		 */
+		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add(this.focalPoint.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION));
+		this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);
+		
 		float whRatio = (float) WIDTH / (float) HEIGHT;
 		GLU.gluPerspective(45, whRatio, 1, 1000);
 		GLU.gluLookAt(viewTranslation.getX(), viewTranslation.getY(), viewTranslation.getZ(),

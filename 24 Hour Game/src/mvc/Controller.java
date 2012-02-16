@@ -73,16 +73,16 @@ public class Controller extends Thread {
 			}
 			
 			if (keysPressed[Keyboard.KEY_LEFT]){
-				view.viewTranslation = view.viewTranslation.add(new Vector3D(-1, 0, 0));
+				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(-1, 0, 0));
 			}
 			if (keysPressed[Keyboard.KEY_UP]){
-				view.viewTranslation = view.viewTranslation.add(new Vector3D(0, 1, 0));
+				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, 1, 0));
 			}
 			if (keysPressed[Keyboard.KEY_RIGHT]){
-				view.viewTranslation = view.viewTranslation.add(new Vector3D(1, 0, 0));
+				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(1, 0, 0));
 			}
 			if (keysPressed[Keyboard.KEY_DOWN]){
-				view.viewTranslation = view.viewTranslation.add(new Vector3D(0, -1, 0));
+				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, -1, 0));
 			}
 		}
 	}
