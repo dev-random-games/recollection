@@ -1,7 +1,7 @@
 package mvc;
 
-import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
@@ -22,6 +22,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -38,31 +40,35 @@ public class View extends Thread {
 	Model model;
 	JFrame frame;
 
-	public static final int WIDTH = 700;
-	public static final int HEIGHT = 700;
-
+	public static final int WIDTH = 820;
+	public static final int HEIGHT = 640;
+	
+	// If true and available, full screen mode will be used.
+	private static final boolean FULLSCREENENABLED = false;
 	public Vector3D viewTranslation;// Vector specifying the translation of the
 									// view in 2D space.
 
 	public static int frameCount = 0;
-
-	// If true and available, full screen mode will be used.
-	private static final boolean FULLSCREENENABLED = false;
+	
 	private static final int padding = 100; // Amount of padding on a default
 											// window.
 	
 	TextureLoader textureLoader;
+	
+	TrueTypeFont defaultFont;
 
 	
+	@SuppressWarnings("deprecation")
 	public View(Model model){
 		this.model = model;
-		try {
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+		
 		viewTranslation = new Vector3D(0, 0, HEIGHT);
+		
+		if (FULLSCREENENABLED){
+			setDisplayMode(Display.getWidth(), Display.getHeight(), true);
+		} else {
+			setDisplayMode(WIDTH, HEIGHT, false);
+		}
 		
 		textureLoader = new TextureLoader();
 	}
@@ -84,61 +90,133 @@ public class View extends Thread {
 		GL11.glLoadIdentity();
 	}
 	
+	/**
+	 * Set the display mode to be used 
+	 * 
+	 * Stoled from the LWJGL website, because I can't bother to write all this on my own.
+	 * 
+	 * @param width The width of the display required
+	 * @param height The height of the display required
+	 * @param fullscreen True if we want fullscreen mode
+	 */
+	public void setDisplayMode(int width, int height, boolean fullscreen) {
+
+	    // return if requested DisplayMode is already set
+	    if ((Display.getDisplayMode().getWidth() == width) && 
+	        (Display.getDisplayMode().getHeight() == height) && 
+		(Display.isFullscreen() == fullscreen)) {
+		    return;
+	    }
+
+	    try {
+	        DisplayMode targetDisplayMode = null;
+			
+		if (fullscreen) {
+		    DisplayMode[] modes = Display.getAvailableDisplayModes();
+		    int freq = 0;
+					
+		    for (int i=0;i<modes.length;i++) {
+		        DisplayMode current = modes[i];
+						
+			if ((current.getWidth() == width) && (current.getHeight() == height)) {
+			    if ((targetDisplayMode == null) || (current.getFrequency() >= freq)) {
+			        if ((targetDisplayMode == null) || (current.getBitsPerPixel() > targetDisplayMode.getBitsPerPixel())) {
+				    targetDisplayMode = current;
+				    freq = targetDisplayMode.getFrequency();
+	                        }
+	                    }
+
+			    // if we've found a match for bpp and frequence against the 
+			    // original display mode then it's probably best to go for this one
+			    // since it's most likely compatible with the monitor
+			    if ((current.getBitsPerPixel() == Display.getDesktopDisplayMode().getBitsPerPixel()) &&
+	                        (current.getFrequency() == Display.getDesktopDisplayMode().getFrequency())) {
+	                            targetDisplayMode = current;
+	                            break;
+	                    }
+	                }
+	            }
+	        } else {
+	            targetDisplayMode = new DisplayMode(width,height);
+	        }
+
+	        if (targetDisplayMode == null) {
+	            System.out.println("Failed to find value mode: "+width+"x"+height+" fs="+fullscreen);
+	            return;
+	        }
+
+	        Display.setDisplayMode(targetDisplayMode);
+	        Display.setFullscreen(fullscreen);
+				
+	    } catch (LWJGLException e) {
+	        System.out.println("Unable to setup mode "+width+"x"+height+" fullscreen="+fullscreen + e);
+	    }
+	}
+	
 	/*
 	 * Update the display, then push the changes to the screen
 	 */
+	@SuppressWarnings("deprecation")
 	public void run(){
+		/*
+		 * Create a new display, which all of the GL11 commands will be applied to.
+		 */
 		try {
-			/*
-			 * Initialize display
-			 */
 			Display.create();
-			
-			GL11.glViewport(0, 0, WIDTH, HEIGHT);
-			
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glDepthFunc(GL11.GL_LEQUAL);
-			GL11.glShadeModel(GL11.GL_SMOOTH); // Enables Smooth Shading
-			/*
-			 * Enable masking transparency.
-			 */
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);	
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
-			GL11.glClearColor(0f, 0f, 0f, 1f);
-			
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+			System.exit(0);
+		}
+		
+		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthFunc(GL11.GL_LEQUAL);
+		GL11.glShadeModel(GL11.GL_SMOOTH); // Enables Smooth Shading
+		/*
+		 * Enable masking transparency.
+		 */
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);	
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
+		GL11.glClearColor(0f, 0f, 0f, 1f);
+		
+		// load a default font for on screen text
+				Font awtFont = new Font("Arial", Font.BOLD, 24);
+				defaultFont = new TrueTypeFont(awtFont, false);
+		
+		try {
+			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("/data/alot.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		while (!Display.isCloseRequested()) {
 			try {
-				TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("/data/alot.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			/*
+			 * All OpenGL Display code goes here!
+			 */
+			setCamera(); // *DO NOT CHANGE THIS*
+			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - Display.getWidth() / 2, (int) viewTranslation.getY() - Display.getHeight() / 2,
+												Display.getWidth(), Display.getHeight());
 			
-			while (!Display.isCloseRequested()) {
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				/*
-				 * All OpenGL Display code goes here!
-				 */
-				setCamera(); // *DO NOT CHANGE THIS*
-				
-				for (Sprite sprite : model.sprites){
+			for (Sprite sprite : model.sprites){
+				if (sprite.getBoundingBox().intersects(viewRect)){
 					sprite.draw();
 				}
-				
-				Display.update();
 			}
-		} catch (LWJGLException e1) {
-			e1.printStackTrace();
+			
+			defaultFont.drawString(-300, -300, "TEST", Color.red);
+			
+			Display.update();
 		}
 		Display.destroy();
 		System.exit(0);

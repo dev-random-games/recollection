@@ -1,9 +1,9 @@
 package mvc;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 
 public class ExtrudeSprite extends Sprite{
 

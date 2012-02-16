@@ -1,6 +1,5 @@
 package mvc;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +13,7 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Port;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -37,9 +37,14 @@ public class Model extends Thread {
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.RED));
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
+		
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 		
 		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
+		
+		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 	}
 
 	/*

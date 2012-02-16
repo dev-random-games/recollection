@@ -1,9 +1,10 @@
 package mvc;
 
-import java.awt.Color;
+
 import java.awt.Rectangle;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 
 public class RectSprite extends Sprite{
 
@@ -11,13 +12,13 @@ public class RectSprite extends Sprite{
 	public float r;
 	Color color;
 	
-	public RectSprite(float x, float y, float w, float h, float depth, Color color){
+	public RectSprite(float x, float y, float w, float h, float depth, Color red){
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		this.depth = depth;
-		this.color = color;
+		this.color = red;
 	}
 	
 	@Override
