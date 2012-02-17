@@ -1,5 +1,11 @@
 package mvc;
 
+import java.io.IOException;
+
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
 
 /**
  * 
@@ -27,6 +33,16 @@ public class Main extends Thread {
 		model.start();
 		controller.start();
 		view.start();
+		
+		try {
+//			Audio sound = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("/data/audio/lemons.ogg"));
+//			sound.playAsSoundEffect(1.0f, 1.0f, true);S
+			Audio oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/crazytales.ogg"));
+			oggEffect.playAsSoundEffect(1.0f, 1.0f, false);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		while (true){
 			try {
