@@ -94,6 +94,11 @@ public class Controller extends Thread {
 	 */
 	public void mousePressed(int x, int y){
 		System.out.println(x + ", " + y);
+		
+		int worldX = x + (int) view.viewTranslation.getX() - view.WIDTH / 2;
+		int worldY = y + (int) view.viewTranslation.getY() - view.HEIGHT / 2;
+		
+		view.focalPoint = new Vector3D(worldX, worldY, view.focalPoint.getZ());
 	}
 	
 	/**

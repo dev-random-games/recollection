@@ -40,22 +40,22 @@ public class Model extends Thread {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 		
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
-		
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
+//		
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 		
 		sprites.add(new TextureSprite(-100, -100, 100, 100, 100, "/data/test.png"));
 		
 		
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 		
 		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
 		
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299.9f, Color.red));
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299.9f, Color.red));
 		
 //		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
 //		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.white));
+//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.white));
 		
 		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
 		
