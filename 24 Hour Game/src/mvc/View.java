@@ -51,8 +51,8 @@ public class View extends Thread {
 	Model model;
 	JFrame frame;
 
-	public static final int WIDTH = 820;
-	public static final int HEIGHT = 640;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	// If true and available, full screen mode will be used.
 	private static final boolean FULLSCREENENABLED = false;
