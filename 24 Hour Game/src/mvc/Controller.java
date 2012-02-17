@@ -84,6 +84,9 @@ public class Controller extends Thread {
 			if (keysPressed[Keyboard.KEY_DOWN]){
 				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, -1, 0));
 			}
+			if (keysPressed[Keyboard.KEY_E]){
+				model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
+			}
 		}
 	}
 	
