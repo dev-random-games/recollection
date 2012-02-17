@@ -27,6 +27,17 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.nio.FloatBuffer;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.glu.GLU;
+import org.lwjgl.util.glu.Sphere;
+
+import static org.lwjgl.opengl.GL11.*;
+
 /**
  * 
  * View component of the MVC system. This handles the entire graphical
@@ -60,7 +71,7 @@ public class View extends Thread {
 	/* 
 	 * Stuff for smooth camera movement and automatic camera movement
 	 */
-	public static final float CAMERAVELOCITYPRESERVATION = 0.95f; //camera velocity to be preserved at each frame
+	public static final float CAMERAVELOCITYPRESERVATION = 0.90f; //camera velocity to be preserved at each frame
 	//attraction to focal point (0 will result in no attraction; higher values may make the view jumpy)
 	public static final float FOCALPOINTATTRACTION = 0.01f;
 	Vector3D cameraVelocity;
@@ -226,11 +237,29 @@ public class View extends Thread {
 			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - Display.getWidth() / 2, (int) viewTranslation.getY() - Display.getHeight() / 2,
 												Display.getWidth(), Display.getHeight());
 			
+			// TODO figure out what's wrong with viewRect and fix it
 			for (Sprite sprite : model.sprites){
 				if (sprite.getBoundingBox().intersects(viewRect)){
 					sprite.draw();
 				}
 			}
+			
+			/* Lighting */
+			for (Light light : model.lights) {
+				glMaterial(GL_FRONT, GL_SPECULAR, light.matSpecular);				// sets specular material color
+				glMaterialf(GL_FRONT, GL_SHININESS, 50.0f);					// sets shininess
+
+				glLight(GL_LIGHT0, GL_POSITION, light.lightPosition);				// sets light position
+				glLight(GL_LIGHT0, GL_SPECULAR, light.whiteLight);				// sets specular light to white
+				glLight(GL_LIGHT0, GL_DIFFUSE, light.whiteLight);					// sets diffuse light to white
+				glLightModel(GL_LIGHT_MODEL_AMBIENT, light.lModelAmbient);		// global ambient light 
+			}
+			
+			glEnable(GL_LIGHTING);										// enables lighting
+			glEnable(GL_LIGHT0);										// enables light0
+			
+			glEnable(GL_COLOR_MATERIAL);								// enables opengl to use glColor3f to define material color
+			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);			// tell opengl glColor3f effects the ambient and diffuse properties of material
 			
 			defaultFont.drawString(-300, -300, "TEST", Color.red);
 			

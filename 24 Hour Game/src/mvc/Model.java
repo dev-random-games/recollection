@@ -13,6 +13,7 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Port;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.lwjgl.BufferUtils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -28,6 +29,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Model extends Thread {
 
 	public ArrayList<Sprite> sprites;
+	public ArrayList<Light> lights;
 	
 	/*
 	 * Audio *out* port.
@@ -36,14 +38,16 @@ public class Model extends Thread {
 	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
+		lights = new ArrayList<Light>();
 		
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
 		
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 		
 		sprites.add(new TextureSprite(-100, -100, 100, 100, 100, "/data/test.png"));
 		
 		
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 		
 		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
 		
@@ -51,6 +55,30 @@ public class Model extends Thread {
 		
 //		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
 //		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.white));
+		
+		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
+		
+		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
+		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+		
+		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/lavabg.png"));
+		
+		Light light = new Light();
+		
+		light.matSpecular = BufferUtils.createFloatBuffer(4);
+		light.matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
+		
+		light.lightPosition = BufferUtils.createFloatBuffer(4);
+		light.lightPosition.put(110.0f).put(110.0f).put(100.0f).put(0.0f).flip();
+		
+		light.whiteLight = BufferUtils.createFloatBuffer(4);
+		light.whiteLight.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
+		
+		light.lModelAmbient = BufferUtils.createFloatBuffer(4);
+		light.lModelAmbient.put(0.5f).put(0.5f).put(0.5f).put(1.0f).flip();
+		
+		lights.add(light);
 	}
 
 	/*
