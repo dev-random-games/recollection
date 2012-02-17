@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -266,6 +267,7 @@ public class View extends Thread {
 			Display.update();
 		}
 		Display.destroy();
+		AL.destroy();
 		System.exit(0);
 	}
 }
