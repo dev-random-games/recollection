@@ -13,7 +13,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class AnimationSprite extends Sprite{
 	
-	private float x, y, w, h, depth, r;
+	public float x, y, w, h, depth, r;
 	
 	private ArrayList<Texture> frames;
 	private Queue<String> texturePathBuffer;

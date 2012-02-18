@@ -210,7 +210,6 @@ public class View extends Thread {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
 		GL11.glClearColor(0f, 0f, 0f, 1f);
 		
@@ -218,12 +217,12 @@ public class View extends Thread {
 				Font awtFont = new Font("Arial", Font.BOLD, 24);
 				defaultFont = new TrueTypeFont(awtFont, false);
 		
-		try {
-			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("/data/alot.png"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("/data/alot.png"));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		while (!Display.isCloseRequested()) {
 			try {
@@ -235,12 +234,12 @@ public class View extends Thread {
 			 * All OpenGL Display code goes here!
 			 */
 			setCamera(); // *DO NOT CHANGE THIS*
-			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - Display.getWidth() / 2, (int) viewTranslation.getY() - Display.getHeight() / 2,
-												Display.getWidth(), Display.getHeight());
+			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - WIDTH / 2, (int) viewTranslation.getY() - HEIGHT / 2,
+												WIDTH, HEIGHT);
 			
 			// TODO figure out what's wrong with viewRect and fix it
 			for (Sprite sprite : model.sprites){
-				if (sprite.getBoundingBox().intersects(viewRect)){
+				if (sprite.getBoundingBox().intersects(viewRect) || true){
 					sprite.draw();
 				}
 			}
@@ -260,10 +259,7 @@ public class View extends Thread {
 			glEnable(GL_LIGHT0);										// enables light0
 			
 			glEnable(GL_COLOR_MATERIAL);								// enables opengl to use glColor3f to define material color
-			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);			// tell opengl glColor3f effects the ambient and diffuse properties of material
-			
-			defaultFont.drawString(-300, -300, "TEST", Color.red);
-			
+			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);			// tell opengl glColor3f effects the ambient and diffuse properties of material			
 			Display.update();
 		}
 		Display.destroy();

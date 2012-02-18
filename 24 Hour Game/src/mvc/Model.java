@@ -43,40 +43,15 @@ public class Model extends Thread {
 	 */
 	static Port audioOut;
 	
+	AnimationSprite animSprite;
+	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
-//		
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
+		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"));
 
-		sprites.add(new TextureSprite(-100, -100, 100, 100, 100, "/data/textures/stone.png"));
-
-
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-
-		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
-
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299.9f, Color.red));
-
-//		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.white));
-
-		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
-
-//		AnimationSprite animSprite = new AnimationSprite(400, 400, 200, 200, 200, "/data/test.png");
-//		
-//		sprites.add(animSprite);
-
-		sprites.add(new TextureSprite(-100, -100, 400, 400, 300, "/data/fonts/terminus.png"));
-		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-
-		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"));
-
-		AnimationSprite animSprite = new AnimationSprite(400, 400, 200, 200, 200, 10, "/data/testFrame1.png");
+		animSprite = new AnimationSprite(0, 0, 200, 200, 200, 10, "/data/testFrame1.png");
 		animSprite.addFrame("/data/testFrame2.png");
 		animSprite.addFrame("/data/testFrame3.png");
 		animSprite.addFrame("/data/testFrame2.png");
@@ -111,7 +86,7 @@ public class Model extends Thread {
 		 * 
 		 */
 		try {
-			creepyTales = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/crazytales.ogg"));
+			creepyTales = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("/data/audio/lemons.wav"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,6 +162,8 @@ public class Model extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			animSprite.r += .1f;
 		}
 	}
 }

@@ -65,10 +65,9 @@ public class TextureSprite extends Sprite{
 		float xDist = w / 2;
 		float yDist = h / 2;
 		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		
 		GL11.glColor3f(1, 1, 1);
 		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		texture.bind();
 		
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
@@ -96,6 +95,8 @@ public class TextureSprite extends Sprite{
 		GL11.glEnd();
 		
 		GL11.glPopMatrix();
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);	// If I don't disable this, non-textured sprites get really screwy
 	}
 
 	/**
