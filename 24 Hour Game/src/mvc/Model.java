@@ -77,11 +77,6 @@ public class Model extends Thread {
 
 		
 		sprites.add(animSprite);
-		
-//		sprites.add(new ExtrudeSprite(- 300, - 300, 50, 600, 300, Color.lightGray));
-//		sprites.add(new ExtrudeSprite(- 300, - 300, 600, 50, 300, Color.lightGray));
-//		sprites.add(new ExtrudeSprite(300, - 300, 600, 50, 300, Color.lightGray));
-//		sprites.add(new ExtrudeSprite(300, - 300, 50, 600, 300, Color.lightGray));
 
 		Light light = new Light();
 
