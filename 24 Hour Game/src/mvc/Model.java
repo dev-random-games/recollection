@@ -54,34 +54,7 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		sprites.add(new TextureExtrudeSprite(- 200, - 200, 50, 400, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(- 200, 200, 450, 50, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(- 200, - 200, 400, 50, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(200, - 200, 50, 400, 200, "/data/textures/stone.png"));
 		
-		sprites.add(new TextureSprite(-199, -199, 440, 440, 150, "/data/bg/water.png"));
-
-		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water.png"), "water");
-		background.addSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"), "lava");
-		
-		background.setSprite("lava");
-		sprites.add(background);
-		
-		animSprite = new AnimationSprite(-100, -100, 200, 200, 151, 10, "/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky2.png");
-		animSprite.addFrame("/data/char/sticky3.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky3.png");
-		animSprite.addFrame("/data/char/sticky2.png");
-
-		
-		sprites.add(animSprite);
-		
-		sprites.add(new TextSprite(300, 300, 2000, 100, "testing testing 1 2 3. Does this expand well? Yes it does!"));
 
 		Light light = new Light();
 
