@@ -1,7 +1,10 @@
 package mvc;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
+
+import org.lwjgl.opengl.GL11;
 
 /**
  * 
@@ -9,8 +12,8 @@ import java.util.ArrayList;
  * resizing), and rectangular and circular searches. refresh() regenerates the
  * entire R-tree, optimizing future efficiency but with a heavy cost. update()
  * resizes all rectangles in the R-tree, optimizing present efficiency with
- * almost no cost, but needs to be called every frame if point locations are
- * changing. Takes a Point as input - this can be replaced with any Point class
+ * almost no cost, but needs to be called every frame if Sprite locations are
+ * changing. Takes a Sprite as input - this can be replaced with any Sprite class
  * that contains public double values x and y.
  * 
  * @author Dylan Swiggett
@@ -18,8 +21,8 @@ import java.util.ArrayList;
 public class Rtree {
 
 	// Private variables
-	private int maxCount;
-	private Point[] points;
+	int maxCount;
+	private Sprite[] sprites;
 	private Rtree[] subTrees;
 	private int x, y, x1, y1;
 	private boolean leaf;
@@ -28,73 +31,73 @@ public class Rtree {
 
 	public Rtree(int maxCount) {
 		this.maxCount = maxCount;
-		points = new Point[maxCount + 1];
+		sprites = new Sprite[maxCount + 1];
 		leaf = true;
 	}
 
 	/**
-	 * Regenerate the entire R-tree, pulling all of the points out and then
+	 * Regenerate the entire R-tree, pulling all of the Sprites out and then
 	 * re-adding from scratch.
 	 */
 	public void refresh() {
-		ArrayList<Point> pointList = getPoints(new ArrayList<Point>());
+		ArrayList<Sprite> SpriteList = getSprites(new ArrayList<Sprite>());
 		subTrees = null;
-		points = new Point[maxCount + 1];
+		sprites = new Sprite[maxCount + 1];
 		leaf = true;
-		for (Point p : pointList) {
+		for (Sprite p : SpriteList) {
 			add(p);
 		}
 	}
 
 	/**
-	 * Return all points within the R-tree and all of its children in an
+	 * Return all Sprites within the R-tree and all of its children in an
 	 * ArrayList.
 	 * 
-	 * @param pointCollector
-	 * @return ArrayList<Point>
+	 * @param SpriteCollector
+	 * @return ArrayList<Sprite>
 	 */
-	public ArrayList<Point> getPoints(ArrayList<Point> pointCollector) {
+	public ArrayList<Sprite> getSprites(ArrayList<Sprite> SpriteCollector) {
 		if (leaf) {
-			for (Point p : points) {
+			for (Sprite p : sprites) {
 				if (p == null) {
 					break;
 				}
-				pointCollector.add(p);
+				SpriteCollector.add(p);
 			}
 		} else {
 			for (Rtree tree : subTrees) {
-				pointCollector = tree.getPoints(pointCollector);
+				SpriteCollector = tree.getSprites(SpriteCollector);
 			}
 		}
-		return pointCollector;
+		return SpriteCollector;
 	}
 
 	/**
-	 * Subdivide the R-tree into multiple sub-trees, one for each point. Will be
+	 * Subdivide the R-tree into multiple sub-trees, one for each Sprite. Will be
 	 * called automatically if maxCount is reached.
 	 */
 	public void subdivide() {
 		subTrees = new Rtree[maxCount];
 		for (int i = 0; i < maxCount; i++) {
 			subTrees[i] = new Rtree(maxCount);
-			subTrees[i].add(points[i]);
+			subTrees[i].add(sprites[i]);
 		}
-		points = null;
+		sprites = null;
 		leaf = false;
 	}
 
 	/**
-	 * Select the tree requiring the least enlargement to add the point.
+	 * Select the tree requiring the least enlargement to add the Sprite.
 	 * 
-	 * @param point
+	 * @param Sprite
 	 * @return
 	 */
-	public Rtree chooseLeaf(Point point) {
+	public Rtree chooseLeaf(Sprite Sprite) {
 		Rtree expandTree = subTrees[0];
-		expandTree.expandAmount(point);
+		expandTree.expandAmount(Sprite);
 		int minAmount = expandTree.expandTotal;
 		for (Rtree tree : subTrees) {
-			tree.expandAmount(point);
+			tree.expandAmount(Sprite);
 			if (tree.expandTotal < minAmount) {
 				expandTree = tree;
 				minAmount = tree.expandTotal;
@@ -104,7 +107,7 @@ public class Rtree {
 	}
 
 	/**
-	 * Recursively expand or shrink to fit all points and sub-leafs. Much less
+	 * Recursively expand or shrink to fit all Sprites and sub-leafs. Much less
 	 * costly than refresh(), but also less effective.
 	 */
 	public void update() {
@@ -120,23 +123,25 @@ public class Rtree {
 
 	/**
 	 * Return the total amount necessary to expand the R-tree to contain the
-	 * point.
+	 * Sprite.
 	 * 
 	 * @param p
 	 * @return
 	 */
-	public int[] expandAmount(Point p) {
+	public int[] expandAmount(Sprite sprite) {
+		Rectangle rect = sprite.getBoundingBox();
 		int[] amount = new int[] { 0, 0, 0, 0 };
-		if (p.x < x) {
-			amount[0] = (int) (x - p.x);
-		} else if (p.x > x1) {
-			amount[2] = (int) (p.x - x1);
+		if (rect.getX() < x) {
+			amount[0] = (int) (x - rect.getX());
+		}
+		if (rect.getX() + rect.getWidth() > x1) {
+			amount[2] = (int) (rect.getX() + rect.getWidth() - x1);
 		}
 
-		if (p.y < y) {
-			amount[1] = (int) (y - p.y);
-		} else if (p.y > y1) {
-			amount[3] = (int) (p.y - y1);
+		if (rect.getY() < y) {
+			amount[1] = (int) (y - rect.getY());
+		} else if (rect.getY() + rect.getHeight() > y1) {
+			amount[3] = (int) (rect.getY() + rect.getHeight() - y1);
 		}
 		// expandTotal = (amount[0] + amount[2]) * (amount[1] + amount[3]);
 		expandTotal = amount[0] + amount[2] + amount[1] + amount[3];
@@ -144,11 +149,11 @@ public class Rtree {
 	}
 
 	/**
-	 * Expand R-tree to contain specified point.
+	 * Expand R-tree to contain specified Sprite.
 	 * 
 	 * @param p
 	 */
-	public void expandLeaf(Point p) {
+	public void expandLeaf(Sprite p) {
 		int[] amount = expandAmount(p);
 		x -= amount[0];
 		y -= amount[1];
@@ -157,19 +162,25 @@ public class Rtree {
 	}
 
 	/**
-	 * Expand R-tree leaf to contain all points within it.
+	 * Expand R-tree leaf to contain all Sprites within it.
 	 */
 	public void expandLeaf() {
-		x = (int) points[0].x - 1;
-		y = (int) points[0].y - 1;
-		x1 = x + 2;
-		y1 = y + 2;
-		for (Point p : points) {
+//		x = (int) sprites[0].x - 1;
+//		y = (int) sprites[0].y - 1;
+//		x1 = x + 2;
+//		y1 = y + 2;
+		Rectangle r = sprites[0].getBoundingBox();
+		for (Sprite p : sprites) {
 			if (p == null) {
 				break;
 			}
-			expandLeaf(p);
+//			expandLeaf(p);
+			r = r.union(p.getBoundingBox());
 		}
+		x = (int) r.getX();
+		y = (int) r.getY();
+		x1 = (int) (r.getX() + r.getWidth());
+		y1 = (int) (r.getY() + r.getHeight());
 	}
 
 	/**
@@ -201,84 +212,110 @@ public class Rtree {
 		return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 
-	private ArrayList<Point> _getPointsInCircle(int x, int y, int radius, ArrayList<Point> points) {
-		if (leaf) {
-			for (Point point : this.points) {
-				if (point == null) {
-					break;
-				} else if (distance(point.x, point.y, x, y) <= radius) {
-					points.add(point);
-				}
-			}
-		} else {
-			for (Rtree tree : subTrees) {
-				if (x - radius < tree.x1 && x + radius > tree.x && y - radius < tree.y1 && y + radius > tree.y) {
-					points = tree._getPointsInCircle(x, y, radius, points);
-				}
-			}
-		}
-		return points;
-	}
+//	private ArrayList<Sprite> _getSpritesInCircle(int x, int y, int radius, ArrayList<Sprite> Sprites) {
+//		if (leaf) {
+//			for (Sprite Sprite : this.sprites) {
+//				if (Sprite == null) {
+//					break;
+//				} else if (distance(Sprite.x, Sprite.y, x, y) <= radius) {
+//					Sprites.add(Sprite);
+//				}
+//			}
+//		} else {
+//			for (Rtree tree : subTrees) {
+//				if (x - radius < tree.x1 && x + radius > tree.x && y - radius < tree.y1 && y + radius > tree.y) {
+//					Sprites = tree._getSpritesInCircle(x, y, radius, Sprites);
+//				}
+//			}
+//		}
+//		return Sprites;
+//	}
+//
+//	public ArrayList<Sprite> getSpritesInCircle(int x, int y, int radius) {
+//		return _getSpritesInCircle(x, y, radius, new ArrayList<Sprite>());
+//	}
 
-	public ArrayList<Point> getPointsInCircle(int x, int y, int radius) {
-		return _getPointsInCircle(x, y, radius, new ArrayList<Point>());
-	}
-
-	private ArrayList<Point> _getPointsInRectangle(int x, int y, int width, int height, ArrayList<Point> points) {
+	private ArrayList<Sprite> _getSpritesInRectangle(int x, int y, int width, int height, ArrayList<Sprite> Sprites) {
 		if (leaf) {
-			for (Point point : this.points) {
-				if (point == null) {
+			for (Sprite sprite : this.sprites) {
+				if (sprite != null){
+					Rectangle rect = sprite.getBoundingBox();
+					if (x < rect.getX() + rect.getWidth() && x + width > rect.getX() && y < rect.getY() + rect.getHeight() && y + height > rect.getY()) {
+						Sprites.add(sprite);
+					}
+				} else {
 					break;
-				} else if (x < point.x && x + width > point.x && y < point.y && y + height > point.y) {
-					points.add(point);
 				}
 			}
 		} else {
 			for (Rtree tree : subTrees) {
 				if (x < tree.x1 && x + width > tree.x && y < tree.y1 && y + height > tree.y) {
-					points = tree._getPointsInRectangle(x, y, width, height, points);
+					Sprites = tree._getSpritesInRectangle(x, y, width, height, Sprites);
 				}
 
 			}
 		}
-		return points;
+		return Sprites;
 	}
 
-	public ArrayList<Point> getPointsInRectangle(int x, int y, int width, int height) {
-		return _getPointsInRectangle(x, y, width, height, new ArrayList<Point>());
+	public ArrayList<Sprite> getSpritesInRectangle(int x, int y, int width, int height) {
+		return _getSpritesInRectangle(x, y, width, height, new ArrayList<Sprite>());
+	}
+	
+	public ArrayList<Sprite> getSpritesInRectangle(Rectangle rect) {
+		return getSpritesInRectangle((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+	}
+	
+	public ArrayList<Sprite> getIntersectingSprites(Sprite sprite) {
+		ArrayList<Sprite> intersections = getSpritesInRectangle(sprite.getBoundingBox());
+		/*
+		 * Remove duplicate sprites.
+		 */
+		ArrayList<Sprite> nonEqualIntersections = new ArrayList<Sprite>();
+		for (Sprite sprite1 : intersections){
+			if (!sprite1.equals(sprite)){
+				nonEqualIntersections.add(sprite1);
+			}
+		}
+		return nonEqualIntersections;
 	}
 
 	/**
-	 * Insert new point into R-tree. Takes one point as input. If the maximum
-	 * point count is reached, subdivide the R-tree in maxCount sub-R-trees.
-	 * Otherwise, add the new point to points. To regenerate the whole tree,
+	 * Insert new Sprite into R-tree. Takes one Sprite as input. If the maximum
+	 * Sprite count is reached, subdivide the R-tree in maxCount sub-R-trees.
+	 * Otherwise, add the new Sprite to Sprites. To regenerate the whole tree,
 	 * call refresh();
 	 * 
-	 * @param point
+	 * @param Sprite
 	 */
-	public void add(Point point) {
+	public void add(Sprite Sprite) {
 		if (leaf) {
 			int loc;
 			for (loc = 0; loc < maxCount; loc++) {
-				if (points[loc] == null) {
-					points[loc] = point;
+				if (sprites[loc] == null) {
+					sprites[loc] = Sprite;
 					break;
 				}
 			}
 			if (loc >= maxCount - 1) {
-				expandLeaf(point);
+				expandLeaf(Sprite);
 				subdivide();
 			} else if (loc == 0) {
-				// Add first point to new R-tree.
-				x = (int) point.x - 1;
-				y = (int) point.y - 1;
-				x1 = (int) point.x + 1;
-				y1 = (int) point.y + 1;
+				// Add first Sprite to new R-tree.
+				Rectangle rect = Sprite.getBoundingBox();
+				x = (int) rect.getX();
+				y = (int) rect.getY();
+				x1 = (int) (rect.getX() + rect.getWidth());
+				y1 = (int) (rect.getY() + rect.getHeight());
+//				x = (int) Sprite.x - 1;
+//				y = (int) Sprite.y - 1;
+//				x1 = (int) Sprite.x + 1;
+//				y1 = (int) Sprite.y + 1;
 			} else {
-				expandLeaf(point);
+				expandLeaf(Sprite);
 			}
 		} else {
-			chooseLeaf(point).add(point);
+			chooseLeaf(Sprite).add(Sprite);
 			expandBranch();
 		}
 	}
@@ -289,11 +326,26 @@ public class Rtree {
 	 * 
 	 * @param g
 	 */
-	public void draw(Graphics g) {
-		g.drawRect(x, y, x1 - x, y1 - y);
+	public void draw() {
+//		g.drawRect(x, y, x1 - x, y1 - y);
+		
+		/*
+		 * Draw shape
+		 */
+		GL11.glColor3f(1f, 1f, 1f);
+		
+		int depth = 1;
+		
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		GL11.glVertex3f(x, y, depth);
+		GL11.glVertex3f(x1, y, depth);
+		GL11.glVertex3f(x1, y1, depth);
+		GL11.glVertex3f(x, y1, depth);
+		GL11.glEnd();
+		
 		if (!leaf) {
 			for (Rtree tree : subTrees) {
-				tree.draw(g);
+				tree.draw();
 			}
 		}
 	}

@@ -13,6 +13,8 @@ public class RectSprite extends Sprite{
 	Color color;
 	
 	public RectSprite(float x, float y, float w, float h, float depth, Color red){
+		id();
+		
 		this.p = new Vector3D(x, y, depth);
 		this.w = w;
 		this.h = h;

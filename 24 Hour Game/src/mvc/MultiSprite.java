@@ -14,6 +14,8 @@ public class MultiSprite extends Sprite {
 	private Sprite curSprite;	//Current sprite;
 	
 	public MultiSprite(Sprite initialSprite, String spriteName){
+		id();
+		
 		sprites = new HashMap<String, Sprite>();
 		
 		sprites.put(spriteName, initialSprite);

@@ -97,7 +97,7 @@ public class View extends Thread {
 		focalPoint = new Vector3D(0, 0, INITDISTANCE);
 		
 		header = new TextSprite(0, 0, 500, 600, "Testing the Engine");
-		model.sprites.add(header);
+//		model.sprites.add(header);
 	}
 	
 	/*
@@ -231,11 +231,14 @@ public class View extends Thread {
 												WIDTH, HEIGHT);
 			
 			// TODO figure out what's wrong with viewRect and fix it
-			for (Sprite sprite : model.sprites){
-				if (sprite.getBoundingBox().intersects(viewRect)){
+			/*
+			 * Stuck some padding in there for good measure -- draws only sprites that fall within 100 of the viewRect
+			 */
+			for (Sprite sprite : model.rtree.getSpritesInRectangle((int) viewRect.getX() - 100, (int) viewRect.getY() - 100,
+																	(int) viewRect.getWidth() + 200, (int) viewRect.getHeight() + 200)){
 					sprite.draw();
-				}
 			}
+//			model.rtree.draw();
 			
 			/* Lighting */
 			for (Light light : model.lights) {

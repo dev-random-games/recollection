@@ -47,9 +47,12 @@ public class Model extends Thread {
 	
 	MultiSprite background;
 	
+	Rtree rtree;
+	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
+		rtree = new Rtree(2);
 		
 		sprites.add(new TextureExtrudeSprite(- 200, - 200, 50, 400, 200, "/data/textures/stone.png"));
 		sprites.add(new TextureExtrudeSprite(- 200, 200, 450, 50, 200, "/data/textures/stone.png"));
@@ -184,6 +187,13 @@ public class Model extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			Rtree newTree = new Rtree(rtree.maxCount);
+			for (Sprite sprite : sprites){
+				newTree.add(sprite);
+			}
+			rtree = newTree;
+			
+			System.out.println(rtree.getIntersectingSprites(animSprite).size());
 			
 			animSprite.r += .1f;
 		}

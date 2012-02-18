@@ -11,6 +11,8 @@ public class ExtrudeSprite extends Sprite{
 	Color color;
 	
 	public ExtrudeSprite(float x, float y, float w, float h, float depth, Color color){
+		id();
+		
 		this.p = new Vector3D(x, y, depth);
 		this.w = w;
 		this.h = h;

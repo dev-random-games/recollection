@@ -23,6 +23,8 @@ public class AnimationSprite extends Sprite{
 	
 	
 	public AnimationSprite(float x, float y, float w, float h, float depth, int speed, String texturePath){
+		id();
+		
 		frames = new ArrayList<Texture>();
 		texturePathBuffer = new LinkedList<String>();
 		

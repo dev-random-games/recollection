@@ -14,6 +14,8 @@ public class TextSprite extends Sprite {
 	private String text;
 
 	public TextSprite(float x, float y, float width, float depth, String text) {
+		id();
+		
 		this.p = new Vector3D(x, y, depth);
 		this.w = width;
 		this.h = width / text.length();

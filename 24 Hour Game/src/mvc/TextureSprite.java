@@ -23,6 +23,8 @@ public class TextureSprite extends Sprite{
 	private String texturePath;
 
 	public TextureSprite(float x, float y, float w, float h, float depth, String texturePath){
+		id();
+		
 		this.p = new Vector3D(x, y, depth);
 		this.w = w;
 		this.h = h;

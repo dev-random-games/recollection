@@ -17,6 +17,8 @@ public class TextureExtrudeSprite extends Sprite{
 	private String texturePath;
 	
 	public TextureExtrudeSprite(float x, float y, float w, float h, float depth, String texturePath){
+		id();
+		
 		this.p = new Vector3D(x, y, depth);
 		this.w = w;
 		this.h = h;
@@ -39,6 +41,8 @@ public class TextureExtrudeSprite extends Sprite{
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(texturePath));
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -51,6 +55,7 @@ public class TextureExtrudeSprite extends Sprite{
 		GL11.glColor3f(1, 1, 1);
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		texture.bind();
 		
 		/*
