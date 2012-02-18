@@ -51,10 +51,10 @@ public class Model extends Thread {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 		
-		sprites.add(new ExtrudeSprite(- 200, - 200, 50, 400, 200, Color.lightGray));
-		sprites.add(new ExtrudeSprite(- 200, 200, 450, 50, 200, Color.lightGray));
-		sprites.add(new ExtrudeSprite(- 200, - 200, 400, 50, 200, Color.lightGray));
-		sprites.add(new ExtrudeSprite(200, - 200, 50, 400, 200, Color.lightGray));
+		sprites.add(new TextureExtrudeSprite(- 200, - 200, 50, 400, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(- 200, 200, 450, 50, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(- 200, - 200, 400, 50, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(200, - 200, 50, 400, 200, "/data/textures/stone.png"));
 		
 		sprites.add(new TextureSprite(-199, -199, 440, 440, 150, "/data/bg/water.png"));
 
