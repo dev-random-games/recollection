@@ -19,6 +19,15 @@ public class TextSprite extends Sprite {
 		this.h = width / text.length();
 		this.text = text;
 	}
+	
+	public void changeText(String newText){
+		text = newText;
+		texture = null;
+	}
+	
+	public String getText(){
+		return text;
+	}
 
 	@Override
 	public Rectangle getBoundingBox() {

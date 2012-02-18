@@ -68,7 +68,7 @@ public class View extends Thread {
 	
 	TextureLoader textureLoader;
 	
-	TrueTypeFont defaultFont;
+	TextSprite header;
 
 	/* 
 	 * Stuff for smooth camera movement and automatic camera movement
@@ -95,6 +95,9 @@ public class View extends Thread {
 		
 		cameraVelocity = new Vector3D(0, 0, 0);
 		focalPoint = new Vector3D(0, 0, INITDISTANCE);
+		
+		header = new TextSprite(0, 0, 500, 600, "Testing the Engine");
+		model.sprites.add(header);
 	}
 	
 	/*
@@ -213,17 +216,6 @@ public class View extends Thread {
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
 		GL11.glClearColor(0f, 0f, 0f, 1f);
-		
-		// load a default font for on screen text
-				Font awtFont = new Font("Arial", Font.BOLD, 24);
-				defaultFont = new TrueTypeFont(awtFont, false);
-		
-//		try {
-//			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("/data/alot.png"));
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 		
 		while (!Display.isCloseRequested()) {
 			try {
