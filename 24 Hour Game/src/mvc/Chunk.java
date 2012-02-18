@@ -86,19 +86,38 @@ public class Chunk extends Sprite{
 					int blue = rgb & 0x000000ff;
 					
 					if (red == 0 && blue == 0 && green == 0){
-						tilesA[x][y] = WALL;
+						tilesA[x][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
 					}
 				}
 			}
 			/*
 			 * Load tilesB
 			 */
+			for (int x = 33; x < 65; x ++){
+				for (int y = 0; y < 32; y ++){
+					int rgb = chunkImg.getRGB(x, y);
+					int red = (rgb & 0x00ff0000) >> 16;
+					int green = (rgb & 0x0000ff00) >> 8;
+					int blue = rgb & 0x000000ff;
+					
+					if (red == 0 && blue == 0 && green == 0){
+						tilesB[x - 33][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
+					}
+				}
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 		return this;
+	}
+	
+	/*
+	 * Change the visible tile - true for A, false for B
+	 */
+	public void setState(boolean tileState){
+		this.tileState = tileState;
 	}
 	
 }
