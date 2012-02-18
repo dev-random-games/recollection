@@ -74,7 +74,7 @@ public class Model extends Thread {
 		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
 		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
 
-		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"));
+		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"));
 
 		AnimationSprite animSprite = new AnimationSprite(400, 400, 200, 200, 200, 10, "/data/testFrame1.png");
 		animSprite.addFrame("/data/testFrame2.png");

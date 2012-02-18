@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
+import org.lwjgl.opengl.Display;
 
 /**
  * 
@@ -30,7 +32,7 @@ public class Controller extends Thread {
 		this.model = model;
 		this.view = view;
 		/*
-		 * A Key Dispatcher doesn't rely on the focus.
+		 * A Key Dispatcher doesn't rely on the focus.1
 		 * All key events will be captured.
 		 */
 		keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -88,6 +90,7 @@ public class Controller extends Thread {
 				model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
 			}
 			if (keysPressed[Keyboard.KEY_ESCAPE]){
+				AL.destroy();
 				System.exit(0);
 			}
 		}
