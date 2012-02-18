@@ -74,17 +74,29 @@ public class Controller extends Thread {
 				mouseReleased(Mouse.getX(), Mouse.getY());
 			}
 			
+			if (keysPressed[Keyboard.KEY_W]){
+				model.characterVelocity = model.characterVelocity.add(new Vector3D(0, 1, 0));
+			}
+			if (keysPressed[Keyboard.KEY_A]){
+				model.characterVelocity = model.characterVelocity.add(new Vector3D(-1, 0, 0));
+			}
+			if (keysPressed[Keyboard.KEY_S]){
+				model.characterVelocity = model.characterVelocity.add(new Vector3D(0, -1, 0));
+			}
+			if (keysPressed[Keyboard.KEY_D]){
+				model.characterVelocity = model.characterVelocity.add(new Vector3D(1, 0, 0));
+			}
 			if (keysPressed[Keyboard.KEY_LEFT]){
-				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(-1, 0, 0));
+//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(-1, 0, 0));
 			}
 			if (keysPressed[Keyboard.KEY_UP]){
-				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, 1, 0));
+//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, 1, 0));
 			}
 			if (keysPressed[Keyboard.KEY_RIGHT]){
-				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(1, 0, 0));
+//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(1, 0, 0));
 			}
 			if (keysPressed[Keyboard.KEY_DOWN]){
-				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, -1, 0));
+//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, -1, 0));
 			}
 			if (keysPressed[Keyboard.KEY_E]){
 				model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);

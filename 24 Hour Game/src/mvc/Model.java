@@ -43,45 +43,47 @@ public class Model extends Thread {
 	 */
 	static Port audioOut;
 	
+	AnimationSprite animSprite;
+	
+	MultiSprite background;
+	
+	Rtree rtree;
+	
+	Vector3D characterVelocity;
+	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
+		rtree = new Rtree(2);
+		
+		sprites.add(new TextureExtrudeSprite(- 200, - 200, 50, 400, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(- 200, 200, 450, 50, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(- 200, - 200, 400, 50, 200, "/data/textures/stone.png"));
+		sprites.add(new TextureExtrudeSprite(200, - 200, 50, 400, 200, "/data/textures/stone.png"));
+		
+		sprites.add(new TextureSprite(-199, -199, 440, 440, 150, "/data/bg/water.png"));
+				
+		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water.png"), "water");
+		background.addSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"), "lava");
+		
+		background.setSprite("lava");
+		sprites.add(background);
+		
+		animSprite = new AnimationSprite(-100, -100, 200, 200, 151, 10, "/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky2.png");
+		animSprite.addFrame("/data/char/sticky3.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky3.png");
+		animSprite.addFrame("/data/char/sticky2.png");
 
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.red));
-//		
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-
-		sprites.add(new TextureSprite(-100, -100, 100, 100, 100, "/data/textures/stone.png"));
-
-
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-
-		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
-
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299.9f, Color.red));
-
-//		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-//		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 300, Color.white));
-
-		sprites.add(new TextureSprite(100, 100, 100, 100, 300, "/data/test.png"));
-
-//		AnimationSprite animSprite = new AnimationSprite(400, 400, 200, 200, 200, "/data/test.png");
-//		
-//		sprites.add(animSprite);
-
-		sprites.add(new TextureSprite(-100, -100, 400, 400, 300, "/data/fonts/terminus.png"));
-		sprites.add(new RectSprite(50, 50, 50, 50, 50, Color.red));
-		sprites.add(new ExtrudeSprite(100, 100, 100, 100, 299, Color.red));
-
-		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"));
-
-		AnimationSprite animSprite = new AnimationSprite(400, 400, 200, 200, 200, 10, "/data/testFrame1.png");
-		animSprite.addFrame("/data/testFrame2.png");
-		animSprite.addFrame("/data/testFrame3.png");
-		animSprite.addFrame("/data/testFrame2.png");
-
+		
 		sprites.add(animSprite);
+		
+		sprites.add(new TextSprite(300, 300, 2000, 100, "testing testing 1 2 3. Does this expand well? Yes it does!"));
 
 		Light light = new Light();
 
@@ -100,7 +102,7 @@ public class Model extends Thread {
 		lights.add(light);
 		
 		/*
-		 * Load audio files and play initial musis
+		 * Load audio files and play initial music
 		 * 
 		 * The following is a non-comprehensive list of ways to load audio files and the corresponding method that plays them
 		 * 
@@ -111,7 +113,7 @@ public class Model extends Thread {
 		 * 
 		 */
 		try {
-			creepyTales = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/crazytales.ogg"));
+			creepyTales = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("/data/audio/lemons.wav"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,6 +189,15 @@ public class Model extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			Rtree newTree = new Rtree(rtree.maxCount);
+			for (Sprite sprite : sprites){
+				newTree.add(sprite);
+			}
+			rtree = newTree;
+			
+			System.out.println(rtree.getIntersectingSprites(animSprite).size());
+			
+			animSprite.r += .1f;
 		}
 	}
 }

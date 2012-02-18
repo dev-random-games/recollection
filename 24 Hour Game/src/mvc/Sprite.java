@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 public abstract class Sprite{
 	public Vector3D p;	//Position (x, y) in 2D space, and z for rendering preference.
 	public double r;	//Rotation around the z axis (in radians).
+	private int uniqueId;
+	
+	public static int idIncrementor = 0;
 	
 	/*
 	 * Return the rectangle that surrounds the sprite, for collisions
@@ -18,4 +21,16 @@ public abstract class Sprite{
 	 * been handled.
 	 */
 	public abstract void draw();
+	
+	/*
+	 * Generate a uniqueId for the sprite, so that it can be compared and matched against itself.
+	 */
+	public void id(){
+		uniqueId = idIncrementor;
+		idIncrementor++;
+	}
+	
+	public boolean equals(Sprite sprite){
+		return uniqueId == sprite.uniqueId;
+	}
 }
