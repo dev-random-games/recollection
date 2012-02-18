@@ -77,6 +77,8 @@ public class Model extends Thread {
 
 		
 		sprites.add(animSprite);
+		
+		sprites.add(new TextSprite(300, 300, 2000, 100, "testing testing 1 2 3. Does this expand well? Yes it does!"));
 
 		Light light = new Light();
 
