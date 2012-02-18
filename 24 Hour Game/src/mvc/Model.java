@@ -43,38 +43,21 @@ public class Model extends Thread {
 	 */
 	static Port audioOut;
 	
-	AnimationSprite animSprite;
-	
-	MultiSprite background;
-	
 	Rtree rtree;
 	
-	Vector3D characterVelocity;
+	Vector3D characterVelocity, characterPosition;
+	
+	Chunk[][] chunks;
 	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
+		characterVelocity = new Vector3D();
+		characterPosition = new Vector3D();
 		
-		background.setSprite("lava");
-		sprites.add(background);
-		
-		animSprite = new AnimationSprite(-100, -100, 200, 200, 151, 10, "/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky1.png");
-		animSprite.addFrame("/data/char/sticky2.png");
-		animSprite.addFrame("/data/char/sticky3.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky4.png");
-		animSprite.addFrame("/data/char/sticky3.png");
-		animSprite.addFrame("/data/char/sticky2.png");
-
-		
-		sprites.add(animSprite);
-		
-		sprites.add(new TextSprite(300, 300, 2000, 100, "testing testing 1 2 3. Does this expand well? Yes it does!"));
+		chunks = new Chunk[0][0];
 
 		Light light = new Light();
 
@@ -186,9 +169,7 @@ public class Model extends Thread {
 			}
 			rtree = newTree;
 			
-			System.out.println(rtree.getIntersectingSprites(animSprite).size());
 			
-			animSprite.r += .1f;
 		}
 	}
 }

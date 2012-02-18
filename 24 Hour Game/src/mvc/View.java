@@ -226,6 +226,8 @@ public class View extends Thread {
 			/*
 			 * All OpenGL Display code goes here!
 			 */
+			focalPoint = model.characterPosition;
+			
 			setCamera(); // *DO NOT CHANGE THIS*
 			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - WIDTH / 2, (int) viewTranslation.getY() - HEIGHT / 2,
 												WIDTH, HEIGHT);
