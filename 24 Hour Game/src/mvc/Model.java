@@ -50,18 +50,38 @@ public class Model extends Thread {
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
+		
+		sprites.add(new ExtrudeSprite(- 200, - 200, 50, 400, 200, Color.lightGray));
+		sprites.add(new ExtrudeSprite(- 200, 200, 450, 50, 200, Color.lightGray));
+		sprites.add(new ExtrudeSprite(- 200, - 200, 400, 50, 200, Color.lightGray));
+		sprites.add(new ExtrudeSprite(200, - 200, 50, 400, 200, Color.lightGray));
+		
+		sprites.add(new TextureSprite(-199, -199, 440, 440, 150, "/data/bg/water.png"));
 
-		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"), "water");
+		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water.png"), "water");
 		background.addSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"), "lava");
 		
+		background.setSprite("lava");
 		sprites.add(background);
 		
-		animSprite = new AnimationSprite(0, 0, 200, 200, 200, 10, "/data/testFrame1.png");
-		animSprite.addFrame("/data/testFrame2.png");
-		animSprite.addFrame("/data/testFrame3.png");
-		animSprite.addFrame("/data/testFrame2.png");
+		animSprite = new AnimationSprite(-100, -100, 200, 200, 151, 10, "/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky1.png");
+		animSprite.addFrame("/data/char/sticky2.png");
+		animSprite.addFrame("/data/char/sticky3.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky4.png");
+		animSprite.addFrame("/data/char/sticky3.png");
+		animSprite.addFrame("/data/char/sticky2.png");
 
+		
 		sprites.add(animSprite);
+		
+//		sprites.add(new ExtrudeSprite(- 300, - 300, 50, 600, 300, Color.lightGray));
+//		sprites.add(new ExtrudeSprite(- 300, - 300, 600, 50, 300, Color.lightGray));
+//		sprites.add(new ExtrudeSprite(300, - 300, 600, 50, 300, Color.lightGray));
+//		sprites.add(new ExtrudeSprite(300, - 300, 50, 600, 300, Color.lightGray));
 
 		Light light = new Light();
 

@@ -53,7 +53,8 @@ public class View extends Thread {
 	JFrame frame;
 
 	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 800;
+	public static final int INITDISTANCE = 1000;	//Initial distance of view from z=0
 	
 	// If true and available, full screen mode will be used.
 	private static final boolean FULLSCREENENABLED = false;
@@ -82,7 +83,7 @@ public class View extends Thread {
 	public View(Model model){
 		this.model = model;
 		
-		viewTranslation = new Vector3D(0, 0, HEIGHT);
+		viewTranslation = new Vector3D(0, 0, INITDISTANCE);
 		
 		if (FULLSCREENENABLED){
 			setDisplayMode(Display.getWidth(), Display.getHeight(), true);
@@ -93,7 +94,7 @@ public class View extends Thread {
 		textureLoader = new TextureLoader();
 		
 		cameraVelocity = new Vector3D(0, 0, 0);
-		focalPoint = new Vector3D(100, 100, 700);
+		focalPoint = new Vector3D(0, 0, INITDISTANCE);
 	}
 	
 	/*
