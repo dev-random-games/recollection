@@ -326,15 +326,13 @@ public class Rtree {
 	 * 
 	 * @param g
 	 */
-	public void draw() {
+	public void draw(float depth) {
 //		g.drawRect(x, y, x1 - x, y1 - y);
 		
 		/*
 		 * Draw shape
 		 */
 		GL11.glColor3f(1f, 1f, 1f);
-		
-		int depth = 1;
 		
 		GL11.glBegin(GL11.GL_LINE_LOOP);
 		GL11.glVertex3f(x, y, depth);
@@ -345,7 +343,7 @@ public class Rtree {
 		
 		if (!leaf) {
 			for (Rtree tree : subTrees) {
-				tree.draw();
+				tree.draw(depth);
 			}
 		}
 	}
