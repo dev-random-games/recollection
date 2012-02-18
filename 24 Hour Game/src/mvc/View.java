@@ -215,7 +215,7 @@ public class View extends Thread {
 		GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
-		GL11.glClearColor(0f, 0f, 0f, 1f);
+		GL11.glClearColor(1f, 1f, 1f, 1f);
 		
 		while (!Display.isCloseRequested()) {
 			try {
@@ -226,7 +226,7 @@ public class View extends Thread {
 			/*
 			 * All OpenGL Display code goes here!
 			 */
-			focalPoint = model.characterPosition;
+//			focalPoint = model.characterPosition;
 			
 			setCamera(); // *DO NOT CHANGE THIS*
 			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - WIDTH / 2, (int) viewTranslation.getY() - HEIGHT / 2,
