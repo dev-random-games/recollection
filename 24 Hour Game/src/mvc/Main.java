@@ -26,16 +26,6 @@ public class Main extends Thread {
 		model.start();
 		controller.start();
 		view.start();
-		
-		while (true){
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-//			view.repaint();
-		}
 	}
 
 }

@@ -56,15 +56,6 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		sprites.add(new TextureExtrudeSprite(- 200, - 200, 50, 400, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(- 200, 200, 450, 50, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(- 200, - 200, 400, 50, 200, "/data/textures/stone.png"));
-		sprites.add(new TextureExtrudeSprite(200, - 200, 50, 400, 200, "/data/textures/stone.png"));
-		
-		sprites.add(new TextureSprite(-199, -199, 440, 440, 150, "/data/bg/water.png"));
-				
-		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water.png"), "water");
-		background.addSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"), "lava");
 		
 		background.setSprite("lava");
 		sprites.add(background);

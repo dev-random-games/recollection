@@ -238,7 +238,7 @@ public class View extends Thread {
 																	(int) viewRect.getWidth() + 200, (int) viewRect.getHeight() + 200)){
 					sprite.draw();
 			}
-//			model.rtree.draw();
+//			model.rtree.draw(400);
 			
 			/* Lighting */
 			for (Light light : model.lights) {
