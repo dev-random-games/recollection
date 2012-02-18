@@ -45,12 +45,17 @@ public class Model extends Thread {
 	
 	AnimationSprite animSprite;
 	
+	MultiSprite background;
+	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 
-		sprites.add(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"));
-
+		background = new MultiSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/water0.png"), "water");
+		background.addSprite(new TextureSprite(-1600, -800, 3200, 1600, 0, "/data/bg/lavabg.png"), "lava");
+		
+		sprites.add(background);
+		
 		animSprite = new AnimationSprite(0, 0, 200, 200, 200, 10, "/data/testFrame1.png");
 		animSprite.addFrame("/data/testFrame2.png");
 		animSprite.addFrame("/data/testFrame3.png");

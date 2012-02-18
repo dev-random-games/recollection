@@ -239,7 +239,7 @@ public class View extends Thread {
 			
 			// TODO figure out what's wrong with viewRect and fix it
 			for (Sprite sprite : model.sprites){
-				if (sprite.getBoundingBox().intersects(viewRect) || true){
+				if (sprite.getBoundingBox().intersects(viewRect)){
 					sprite.draw();
 				}
 			}

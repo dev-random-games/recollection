@@ -18,22 +18,20 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class TextureSprite extends Sprite{
 	
-	private float x, y, w, h, depth, r;
+	private float w, h, r;
 	private Texture texture;
 	private String texturePath;
 
 	public TextureSprite(float x, float y, float w, float h, float depth, String texturePath){
-		this.x = x;
-		this.y = y;
+		this.p = new Vector3D(x, y, depth);
 		this.w = w;
 		this.h = h;
-		this.depth = depth;
 		this.texturePath = texturePath;
 	}
 	
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle((int) x, (int) y, (int) w, (int) h);
+		return new Rectangle((int) p.getX(), (int) p.getY(), (int) w, (int) h);
 	}
 
 	@Override
@@ -59,7 +57,7 @@ public class TextureSprite extends Sprite{
 		 * x or y + w or h / 2, so that the image rotates around its center.
 		 */
 		GL11.glPushMatrix();
-		GL11.glTranslatef(x + w / 2, y + h / 2, 0);
+		GL11.glTranslatef(p.getX() + w / 2, p.getY() + h / 2, 0);
 		GL11.glRotatef(getRot(), 0, 0, 1);
 		
 		float xDist = w / 2;
@@ -72,13 +70,13 @@ public class TextureSprite extends Sprite{
 		
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
 		GL11.glTexCoord2f(0, 1);
-		GL11.glVertex3f(-xDist, -yDist, depth);
+		GL11.glVertex3f(-xDist, -yDist, p.getZ());
 		GL11.glTexCoord2f(1, 1);
-		GL11.glVertex3f(xDist, -yDist, depth);
+		GL11.glVertex3f(xDist, -yDist, p.getZ());
 		GL11.glTexCoord2f(1, 0);
-		GL11.glVertex3f(xDist, yDist, depth);
+		GL11.glVertex3f(xDist, yDist, p.getZ());
 		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex3f(-xDist, yDist, depth);
+		GL11.glVertex3f(-xDist, yDist, p.getZ());
 		GL11.glEnd();
 		
 		/*
@@ -88,10 +86,10 @@ public class TextureSprite extends Sprite{
 		GL11.glColor3f(0, 0, 0);
 		
 		GL11.glBegin(GL11.GL_LINE_LOOP);
-		GL11.glVertex3f(-xDist, -yDist, depth);
-		GL11.glVertex3f(xDist, -yDist, depth);
-		GL11.glVertex3f(xDist, yDist, depth);
-		GL11.glVertex3f(-xDist, yDist, depth);
+		GL11.glVertex3f(-xDist, -yDist, p.getZ());
+		GL11.glVertex3f(xDist, -yDist, p.getZ());
+		GL11.glVertex3f(xDist, yDist, p.getZ());
+		GL11.glVertex3f(-xDist, yDist, p.getZ());
 		GL11.glEnd();
 		
 		GL11.glPopMatrix();
