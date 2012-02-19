@@ -81,7 +81,6 @@ public class Controller extends Thread {
 			}
 			
 			if (keysPressed[Keyboard.KEY_UP]){
-				System.out.println(model.character.rot);
 				Vector3D movementVector = new Vector3D(0, moveSensitivity, 0);
 				Vector3D up = new Vector3D(0, 0, 1);
 				model.character.characterVelocity = model.character.characterVelocity.add(movementVector.multiply(up.rotationM((float) (model.character.rot * Math.PI / 180))));

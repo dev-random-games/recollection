@@ -34,4 +34,12 @@ public class Character extends MultiSprite {
 	public void setRot(float rot){
 		this.rot = rot;
 	}
+	
+	public float getWidth() {
+		return curSprite.getWidth();
+	}
+	
+	public float getHeight() {
+		return curSprite.getHeight();
+	}
 }

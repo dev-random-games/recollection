@@ -113,4 +113,12 @@ public class TextureSprite extends Sprite{
 		this.r = r;
 	}
 	
+	public float getWidth() {
+		return w;
+	}
+	
+	public float getHeight() {
+		return h;
+	}
+	
 }

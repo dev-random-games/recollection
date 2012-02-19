@@ -113,8 +113,7 @@ public class View extends Thread {
 		 * Calculate camera velocity from user input, focal point and residue 
 		 * then add it to the view translation.
 		 */
-		this.characterHover = model.character.characterPosition;
-		this.characterHover.setZ(INITDISTANCE);
+		this.characterHover = model.character.characterPosition.add(new Vector3D(model.character.getWidth() / 2, model.character.getHeight() / 2, INITDISTANCE));
 		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add((characterHover.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION)));
 		this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);
 		
