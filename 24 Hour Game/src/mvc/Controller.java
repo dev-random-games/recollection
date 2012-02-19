@@ -135,6 +135,14 @@ public class Controller extends Thread {
 					}
 				}
 			} else if (keysPressed[Keyboard.KEY_SPACE]){
+				view.viewTranslation = new Vector3D(-9500, -9500, view.SPLASHDISTANCE);
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				view.splashMode = false;
 				view.viewTranslation = model.character.characterPosition.add(new Vector3D(15, 15, 50));
 			}

@@ -202,6 +202,16 @@ public class View extends Thread {
 	 */
 	@SuppressWarnings("deprecation")
 	public void run(){
+		
+		if (model.win >= 0 && model.character.health <= 0) {
+			try {
+				rollCredits();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		/*
 		 * Create a new display, which all of the GL11 commands will be applied to.
 		 */
@@ -237,12 +247,13 @@ public class View extends Thread {
 			 * All OpenGL Display code goes here!
 			 */
 //			focalPoint = model.characterPosition;
-			
-			if (Model.rumble > 2){
-				viewTranslation = new Vector3D(viewTranslation.getX(), viewTranslation.getY(), INITDISTANCE + new Random().nextInt(Model.rumble / 2) - Model.rumble / 4);
-				Model.rumble--;
-			} else {
-				Model.rumble = 0;
+			if (!splashMode) { 
+				if (Model.rumble > 2){
+					viewTranslation = new Vector3D(viewTranslation.getX(), viewTranslation.getY(), INITDISTANCE + new Random().nextInt(Model.rumble / 2) - Model.rumble / 4);
+					Model.rumble--;
+				} else {
+					Model.rumble = 0;
+				}
 			}
 			
 			setCamera(); // *DO NOT CHANGE THIS*
@@ -279,6 +290,23 @@ public class View extends Thread {
 			Display.update();
 		}
 		Display.destroy();
+		AL.destroy();
+		System.exit(0);
+	}
+	
+	
+	public void rollCredits() throws InterruptedException {
+		splashMode = true;
+		
+		viewTranslation = new Vector3D(-9500, -9500, SPLASHDISTANCE);
+		Thread.sleep(5000);
+		viewTranslation = new Vector3D(6610, 4950, SPLASHDISTANCE);
+		Thread.sleep(5000);
+		viewTranslation = new Vector3D(14610, 4950, SPLASHDISTANCE);
+		Thread.sleep(5000);
+		viewTranslation = new Vector3D(10610, 4950, SPLASHDISTANCE);
+		Thread.sleep(5000);
+		
 		AL.destroy();
 		System.exit(0);
 	}
