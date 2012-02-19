@@ -95,7 +95,7 @@ public class Model extends Thread {
 		
 		sprites.add(torch);
 		
-		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 20, "/data/scenery/blood0.png");
+		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
 		
 		sprites.add(blood0);
 		
