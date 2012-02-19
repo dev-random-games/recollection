@@ -54,6 +54,7 @@ public class ChunkLoader {
 					for (String entrySwitch : entrySwitches){
 						String[] entryNameSplit = entrySwitch.split("->");
 						newChunk.entrySwitches.put(entryNameSplit[0], entryNameSplit[1].equals("A"));	//Default to chunk version A
+						System.out.println(entryNameSplit[0] + "++" + entryNameSplit[1]);
 					}
 				}
 				

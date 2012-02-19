@@ -162,12 +162,12 @@ public class Chunk extends Sprite{
 		 */
 		Iterator<Entry<String, Boolean>> it = entrySwitches.entrySet().iterator();
 		while (it.hasNext()){
-			System.out.println("ACTIVATING");
 			Map.Entry<String, Boolean> pairs = (Map.Entry<String, Boolean>)it.next();
 			String loc = pairs.getKey();
 			String[] coords = loc.split("_");
 			System.out.println(pairs.getValue());
 			chunks[Integer.parseInt(coords[0])][Integer.parseInt(coords[1])].setState(pairs.getValue());
+			System.out.println(Integer.parseInt(coords[0]) + ", " + Integer.parseInt(coords[1]));
 		}
 	}
 }

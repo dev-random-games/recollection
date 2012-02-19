@@ -91,6 +91,8 @@ public class Model extends Thread {
 		
 		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
+		character.characterPosition = new Vector3D(30, chunks.length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 30, 10);
+		
 //		testChunk.tilesA[0][20] = 1; 
 //		testChunk.tilesA[1][21] = 1; 
 
