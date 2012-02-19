@@ -37,6 +37,8 @@ public class Controller extends Thread {
 	float moveSensitivity;
 	private Audio intro;
 	
+	private int spaceCooldown = 0;
+	
 	public Controller(Model model, View view){
 		this.model = model;
 		this.view = view;
@@ -134,7 +136,7 @@ public class Controller extends Thread {
 				/*
 				 * Attack/knockback key
 				 */
-				if (keysPressed[Keyboard.KEY_SPACE] && Model.win == -1){
+				if (keysPressed[Keyboard.KEY_SPACE] && Model.win == -1 && spaceCooldown <= 0){
 					Vector3D charDir = new Vector3D(0, moveSensitivity, 0).multiply(new Vector3D(0, 0, 1).rotationM((float) (model.character.rot * Math.PI / 180)));
 					for (Spectre spectre : model.spectres){
 						Vector3D toSpectre = model.character.characterPosition.subtract(spectre.spectrePosition);
@@ -147,6 +149,9 @@ public class Controller extends Thread {
 							}
 						}
 					}
+					spaceCooldown = 10;
+				} else {
+					spaceCooldown --;
 				}
 			} else if (keysPressed[Keyboard.KEY_SPACE]){
 				view.viewTranslation = new Vector3D(-9500, -9500, view.SPLASHDISTANCE);
