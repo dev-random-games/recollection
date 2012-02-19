@@ -48,6 +48,8 @@ public class Model extends Thread {
 	
 	Chunk[][] chunks;
 	
+	boolean rtreeGen = false;
+	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
@@ -66,7 +68,7 @@ public class Model extends Thread {
 		
 //		sprites.add(testChunk);
 		
-		ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
+		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
 //		testChunk.tilesA[0][20] = 1; 
 //		testChunk.tilesA[1][21] = 1; 
@@ -182,6 +184,15 @@ public class Model extends Thread {
 				newTree.add(sprite);
 			}
 			rtree = newTree;
+			rtreeGen = true;
+			
+			for (Chunk[] chunkSublist : chunks){
+				for (Chunk chunk : chunkSublist){
+					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
+						System.out.println(chunk.getId());
+					}
+				}
+			}
 			
 			try {
 				Thread.sleep(10);

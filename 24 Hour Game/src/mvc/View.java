@@ -231,15 +231,16 @@ public class View extends Thread {
 //			focalPoint = model.characterPosition;
 			
 			setCamera(); // *DO NOT CHANGE THIS*
-			Rectangle viewRect = new Rectangle((int) viewTranslation.getX() - WIDTH / 2, (int) viewTranslation.getY() - HEIGHT / 2,
-												WIDTH, HEIGHT);
+			float viewScale = 1;
+			Rectangle viewRect = new Rectangle((int) (viewTranslation.getX() - WIDTH * viewScale / 2), (int) (viewTranslation.getY() - HEIGHT * viewScale / 2),
+												(int) (WIDTH * viewScale), (int) (HEIGHT * viewScale));
 			
 			// TODO figure out what's wrong with viewRect and fix it
 			/*
 			 * Stuck some padding in there for good measure -- draws only sprites that fall within 100 of the viewRect
 			 */
-			for (Sprite sprite : model.rtree.getSpritesInRectangle((int) viewRect.getX() - 100, (int) viewRect.getY() - 100,
-																	(int) viewRect.getWidth() + 200, (int) viewRect.getHeight() + 200)){
+			for (Sprite sprite : model.rtree.getSpritesInRectangle((int) viewRect.getX() - 1, (int) viewRect.getY() - 1,
+																	(int) viewRect.getWidth() + 2, (int) viewRect.getHeight() + 2)){
 					sprite.draw();
 			}
 //			model.rtree.draw(400);
