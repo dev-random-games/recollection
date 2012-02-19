@@ -19,7 +19,7 @@ public class AnimationSprite extends Sprite{
 	private Queue<String> texturePathBuffer;
 	
 	private int frameCount;	// Counts the number of elapsed frames.
-	private int frameDelay;	// Time between frames, in # of times drawn.
+	int frameDelay;	// Time between frames, in # of times drawn.
 	
 	
 	public AnimationSprite(float x, float y, float w, float h, float depth, int speed, String texturePath){
@@ -40,6 +40,10 @@ public class AnimationSprite extends Sprite{
 	
 	public void addFrame(String texturePath){
 		texturePathBuffer.add(texturePath);
+	}
+	
+	public int getFrameCount(){
+		return frameCount;
 	}
 
 	@Override

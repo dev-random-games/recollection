@@ -38,7 +38,7 @@ public class Model extends Thread {
 	/*
 	 * audio files
 	 */
-	public Audio creepyTales;
+	public static Audio background;
 	
 	/*
 	 * Audio *out* port.
@@ -99,9 +99,6 @@ public class Model extends Thread {
 		
 		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
-		
-//		testChunk.tilesA[0][20] = 1; 
-//		testChunk.tilesA[1][21] = 1; 
 
 		Light light = new Light();
 
@@ -130,14 +127,14 @@ public class Model extends Thread {
 		 * AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("file.wav")); => wavEffect.playAsSoundEffect(1.0f, 1.0f, false);
 		 * 
 		 */
-//		try {
-//			creepyTales = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("/data/audio/lemons.wav"));
-//		} catch (IOExcepStion e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		creepyTales.playAsSoundEffect(1.0f, 1.0f, true);
+		try {
+			background = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/effects/bang-1.ogg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		background.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	/*

@@ -18,6 +18,7 @@ public class Character extends MultiSprite {
 		sprites.put(spriteName, initialSprite);
 		
 		curSprite = initialSprite;
+		curSpriteName = spriteName;
 		
 		characterSensitivity = 0.9f;
 		characterVelocity = new Vector3D(0, 0, 0);
@@ -28,6 +29,14 @@ public class Character extends MultiSprite {
 	
 	@Override
 	public void draw() {
+		if (curSpriteName.equals("walking")){
+			int f = ((AnimationSprite) curSprite).getFrameCount();
+			int delay = ((AnimationSprite) curSprite).frameDelay;
+//			System.out.println(f);
+			if (f == 0 * delay || f == 9 * delay){
+				System.out.println("Step");
+			}
+		}
 		curSprite.setRot(rot);
 		curSprite.draw();
 	}

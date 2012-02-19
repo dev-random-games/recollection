@@ -46,15 +46,20 @@ public class ChunkLoader {
 				chunks[col][row] = newChunk;
 				
 				if (nameSplit.length > 1){
-					String[] entrySwitches = nameSplit[1].split(",");
+					String[] params = nameSplit[1].split(",");
 					
 					/*
 					 * Calculate all of the requests for chunk switches when the chunk is entered, then set them all up
 					 */
-					for (String entrySwitch : entrySwitches){
-						String[] entryNameSplit = entrySwitch.split("->");
-						newChunk.entrySwitches.put(entryNameSplit[0], entryNameSplit[1].equals("A"));	//Default to chunk version A
-						System.out.println(entryNameSplit[0] + "++" + entryNameSplit[1]);
+					for (String param : params){
+						String[] entryNameSplit = param.split("->");
+						if (entryNameSplit.length == 2){
+							newChunk.entrySwitches.put(entryNameSplit[0], entryNameSplit[1].equals("A"));	//Default to chunk version A
+							System.out.println(entryNameSplit[0] + "++" + entryNameSplit[1]);
+						} else {
+							String[] propertyNameSplit = param.split("=");
+							newChunk.properties.put(propertyNameSplit[0], propertyNameSplit[1]);
+						}
 					}
 				}
 				

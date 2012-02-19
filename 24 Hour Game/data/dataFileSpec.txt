@@ -1,9 +1,9 @@
 # of rows
 # of columns
 
-roomName1        roomName2               roomName3
-roomName4:0_0->B roomName5               roomName6
-roomName7        roomName8:0_1->A,0_2->B roomName9
+roomName1:floorTex=fire roomName2               roomName3
+roomName4:0_0->B        roomName5               roomName6
+roomName7               roomName8:0_1->A,0_2->B roomName9
 
 roomName1.floorTex -> fire
 roomName6.music -> spooky3

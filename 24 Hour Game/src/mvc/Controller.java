@@ -113,9 +113,6 @@ public class Controller extends Thread {
 				if (keysPressed[Keyboard.KEY_DOWN]){
 					
 				}
-				if (keysPressed[Keyboard.KEY_E]){
-					model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
-				}
 			}
 			if (keysPressed[Keyboard.KEY_SPACE]){
 				view.splashMode = false;
