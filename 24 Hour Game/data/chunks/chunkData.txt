@@ -1,7 +1,7 @@
 2
 5
 
-chunk0_0        chunk1_0:0_0->B        chunk2_0:2_1->B                               chunk3_0:3_1->B,2_0->B,playSound=music/dramatic-ending-song-0 chunk4_0:3_0->B,4_0->B,stopSound=1
+chunk0_0        chunk1_0:0_0->B        chunk2_0:2_1->B                               chunk3_0:3_1->B,2_0->B,playSound=music/dramatic-ending-song-0 chunk4_0:3_0->B,4_0->B,stopSound=1,win=1
 chunk0_1:0_0->A chunk1_1:0_1->B,1_0->B chunk2_1:playSound=music/mallet-song-0        chunk3_1:2_1->A                                               chunk_base
 
 

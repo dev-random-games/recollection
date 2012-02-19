@@ -50,6 +50,8 @@ public class Model extends Thread {
 	
 	Chunk[][] chunks;
 	
+	public static int win = -1;
+	
 	boolean rtreeGen = false;
 	public static int rumble = 0; 	//Enable an EARTHQUAKE for *rumble* frames
 	
@@ -126,9 +128,10 @@ public class Model extends Thread {
 //		spectres.add(spectre);
 //		sprites.add(spectre);
 		
-		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
-//		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
-		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
+//		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
+		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
+//		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
+//		character.characterPosition = new Vector3D(1675, 590, 10);
 
 		Light light = new Light();
 
@@ -235,7 +238,7 @@ public class Model extends Thread {
 			 * To all spectre stuff
 			 */
 			for (Spectre spectre : spectres){
-				spectre.spectreVelocity = spectre.spectreVelocity.add(character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(.01f));
+				spectre.spectreVelocity = spectre.spectreVelocity.add(character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(Spectre.speed));
 				spectre.spectrePosition = spectre.spectrePosition.add(spectre.spectreVelocity);
 				spectre.spectreVelocity = spectre.spectreVelocity.scale(.9f);
 				spectre.setX(spectre.spectrePosition.getX());
@@ -251,7 +254,7 @@ public class Model extends Thread {
 //				System.out.println(spectre.spectreVelocity.toString());
 			}
 			
-			System.out.println(character.characterPosition.toString());
+//			System.out.println(character.characterPosition.toString());
 			
 			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
 			
@@ -353,6 +356,18 @@ public class Model extends Thread {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			
+			if (win > 0){
+				if (win == 1000){
+					System.out.println("PLAY");
+					try {
+						AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/effects/bum-bum-0.ogg")).playAsSoundEffect(1.0f, 1.0f, false);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				win--;
 			}
 		}
 	}

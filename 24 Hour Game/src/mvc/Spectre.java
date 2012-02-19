@@ -11,8 +11,9 @@ public class Spectre extends MultiSprite{
 	float spectreSensitivity;
 	float rot;
 	
-	float health = 50;
-	float strength = .1f;
+	static float health = 50;
+	static float strength = .1f;
+	static float speed = .01f;
 	
 	public Spectre(Sprite initialSprite, String spriteName) {
 		super(initialSprite, spriteName);

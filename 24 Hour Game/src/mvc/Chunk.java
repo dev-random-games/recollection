@@ -208,6 +208,9 @@ public class Chunk extends Sprite{
 		 */
 		if (!soundPlayed && properties.containsKey("playSound")){
 			soundPlayed = true;
+			if (Model.background != null){
+				Model.background.stop();
+			}
 			try {
 				Model.background = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/" + properties.get("playSound") + ".ogg"));
 				Model.background.playAsSoundEffect(1.0f, 1.0f, false);
@@ -220,6 +223,13 @@ public class Chunk extends Sprite{
 		if (properties.containsKey("stopSound")){
 			if (Model.background != null){
 				Model.background.stop();
+			}
+		}
+		
+		if (properties.containsKey("win")){
+			if (Model.win == -1){
+				Model.win = 1000;
+				Spectre.speed = .02f;
 			}
 		}
 		
