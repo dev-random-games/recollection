@@ -7,7 +7,7 @@ public class Character extends MultiSprite {
 	HashMap<String, Sprite> sprites;
 //	private Sprite curSprite;	//Current sprite;
 	
-	Vector3D characterVelocity, characterPosition;
+	Vector3D characterVelocity, characterPosition, characterLastPosition;
 	float characterSensitivity;
 	float rot;
 	
@@ -21,7 +21,8 @@ public class Character extends MultiSprite {
 		
 		characterSensitivity = 0.9f;
 		characterVelocity = new Vector3D(0, 0, 0);
-		characterPosition = new Vector3D(0, 0, 0);
+		characterPosition = initialSprite.p;
+		characterLastPosition = initialSprite.p;
 		rot = 0;
 	}
 	
