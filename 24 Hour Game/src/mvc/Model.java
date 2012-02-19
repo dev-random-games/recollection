@@ -55,9 +55,9 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		character = new Character(new TextureSprite(0, 0, 32, 32, 10, "/data/char/goodWalk5.png"), "standing");
+		character = new Character(new TextureSprite(0, 0, 30, 30, 10, "/data/char/goodWalk5.png"), "standing");
 		
-		AnimationSprite walking = new AnimationSprite(0, 0, 32, 32, 10, 3, "/data/char/goodWalk1.png");
+		AnimationSprite walking = new AnimationSprite(0, 0, 30, 30, 10, 2, "/data/char/goodWalk1.png");
 		walking.addFrame("/data/char/goodWalk2.png");
 		walking.addFrame("/data/char/goodWalk3.png");
 		walking.addFrame("/data/char/goodWalk4.png");
