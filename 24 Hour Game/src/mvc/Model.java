@@ -95,7 +95,7 @@ public class Model extends Thread {
 //		
 //		sprites.add(torch);
 //		
-//		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
+//		TextureSprite bloSod0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
 //		
 //		sprites.add(blood0);
 		
@@ -111,7 +111,7 @@ public class Model extends Thread {
 		
 		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
-		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
+//		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
 		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
 		
@@ -218,7 +218,7 @@ public class Model extends Thread {
 	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
-			System.out.println(character.characterPosition.toString());
+//			System.out.println(character.characterPosition.toString());
 			
 			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
 //			Character tempCharacter = new Character(null, null);

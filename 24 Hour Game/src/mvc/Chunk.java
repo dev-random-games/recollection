@@ -59,19 +59,7 @@ public class Chunk extends Sprite{
 		wallSprite = new Wall(0, 0, WALLDIMENSION, WALLDIMENSION);
 //		wallSprite = new TextureExtrudeSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 1000, "data/textures/stone.png");
 		stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/stone.png");
-		double bloodNum = Math.random();
-		String bloodPath;
-		if (bloodNum < 0.25) {
-			bloodPath = "/data/scenery/blood0.png";
-		} else if (bloodNum < 0.5) {
-			bloodPath = "/data/scenery/blood1.png";
-		} else if (bloodNum < 0.5) {
-			bloodPath = "/data/scenery/blood2.png";
-		} else {
-			bloodPath = "/data/scenery/bloodclaw.png";
-		}
-		bloodSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, bloodPath);
-//		bloodSprite = new Tex
+		bloodSprite = new TextureSprite(0, 0,WALLDIMENSION, WALLDIMENSION, 0, "/data/scenery/blood" + new Random().nextInt(4) + ".png");
 		
 		entrySwitches = new Hashtable<String, Boolean>();
 	}
@@ -147,7 +135,7 @@ public class Chunk extends Sprite{
 					
 					if (red == 0 && blue == 0 && green == 0){
 						tilesA[x][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
-					} else 	if (red == 255 && blue == 0 && green == 0){
+					} else if (red == 255 && blue == 0 && green == 0){
 						tilesA[x][CHUNKDIMENSION - 1 - y] = BLOOD;
 					}
 				}
@@ -163,9 +151,9 @@ public class Chunk extends Sprite{
 					int blue = rgb & 0x000000ff;
 					
 					if (red == 0 && blue == 0 && green == 0){
-						tilesA[x-33][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
-					} else 	if (red == 255 && blue == 0 && green == 0){
-						tilesA[x-33][CHUNKDIMENSION - 1 - y] = BLOOD;
+						tilesB[x - 33][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
+					} else if (red == 255 && blue == 0 && green == 0){
+						tilesB[x - 33][CHUNKDIMENSION - 1 - y] = BLOOD;
 					}
 				}
 			}
