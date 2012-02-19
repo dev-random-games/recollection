@@ -34,7 +34,7 @@ public class ChunkLoader {
 		
 		for (int row = 0; row < rows; row++){
 			String rowDat = getNextLine(dataIn);
-			String[] colsDat = rowDat.split(" ");
+			String[] colsDat = rowDat.split("\\s+");
 			for (int col = 0; col < columns; col++){
 				String colDat = colsDat[col];
 				String[] nameSplit = colDat.split(":");

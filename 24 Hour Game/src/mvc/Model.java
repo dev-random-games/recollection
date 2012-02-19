@@ -189,7 +189,7 @@ public class Model extends Thread {
 			for (Chunk[] chunkSublist : chunks){
 				for (Chunk chunk : chunkSublist){
 					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
-						System.out.println(chunk.getId());
+						chunk.activateSwitches(chunks);
 					}
 				}
 			}

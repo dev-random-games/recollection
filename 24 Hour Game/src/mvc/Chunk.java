@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
@@ -42,6 +45,8 @@ public class Chunk extends Sprite{
 	private HashMap<String, String> properties;
 	
 	public Chunk(int x, int y){
+		id();
+		
 		this.x = x;
 		this.y = y;
 		tilesA = new int[CHUNKDIMENSION][CHUNKDIMENSION];
@@ -147,4 +152,20 @@ public class Chunk extends Sprite{
 		this.tileState = tileState;
 	}
 	
+	/*
+	 * Activate all switches for the current location
+	 */
+	public void activateSwitches(Chunk[][] chunks){
+		/*
+		 * Iterating through a HashMap is complicated.
+		 * This sets the x value for each sprite in sprites.
+		 */
+		Iterator<Entry<String, Boolean>> it = entrySwitches.entrySet().iterator();
+		while (it.hasNext()){
+			Map.Entry<String, Boolean> pairs = (Map.Entry<String, Boolean>)it.next();
+			String loc = pairs.getKey();
+			String[] coords = loc.split("_");
+			chunks[Integer.parseInt(coords[0])][Integer.parseInt(coords[1])].setState(pairs.getValue());
+		}
+	}
 }
