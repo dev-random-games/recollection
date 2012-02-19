@@ -3,11 +3,15 @@ package mvc;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * 
@@ -122,6 +126,11 @@ public class Controller extends Thread {
 						Vector3D toSpectre = model.character.characterPosition.subtract(spectre.spectrePosition);
 						if (spectre.spectrePosition.subtract(model.character.characterPosition).length() <= 35 && toSpectre.dotProduct(charDir) < 0){
 							spectre.spectreVelocity = spectre.spectrePosition.subtract(model.character.characterPosition).normalize().scale(2f);
+							try {
+								AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/effects/punch-" + new Random().nextInt(3) + ".ogg")).playAsSoundEffect(1.0f, 1.0f, false);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
