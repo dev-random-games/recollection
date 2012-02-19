@@ -61,8 +61,6 @@ public class AnimationSprite extends Sprite{
 			}
 		}
 		
-		System.out.println("ANIM");
-		
 		Texture currentTexture = frames.get((int) (frameCount / frameDelay));
 		
 		/*

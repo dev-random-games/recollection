@@ -52,9 +52,10 @@ public class View extends Thread {
 	Model model;
 	JFrame frame;
 
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 768;
 	public static final int INITDISTANCE = 250;	//Initial distance of view from z=0
+	public static final int SPLASHDISTANCE = 1000;
 	
 	// If true and available, full screen mode will be used.
 	private static final boolean FULLSCREENENABLED = false;
@@ -80,11 +81,13 @@ public class View extends Thread {
 	Vector3D focalPoint;
 	Vector3D characterHover;
 	
+	boolean splashMode;
+	
 	@SuppressWarnings("deprecation")
 	public View(Model model){
 		this.model = model;
 		
-		viewTranslation = new Vector3D(0, 0, INITDISTANCE);
+		viewTranslation = new Vector3D(-2580, -1550, SPLASHDISTANCE);
 		
 		if (FULLSCREENENABLED){
 			setDisplayMode(Display.getWidth(), Display.getHeight(), true);
@@ -99,6 +102,8 @@ public class View extends Thread {
 		
 		header = new TextSprite(0, 0, 500, 600, "Testing the Engine");
 //		model.sprites.add(header);
+		
+		splashMode = true;
 	}
 	
 	/*
@@ -113,9 +118,11 @@ public class View extends Thread {
 		 * Calculate camera velocity from user input, focal point and residue 
 		 * then add it to the view translation.
 		 */
-		this.characterHover = model.character.characterPosition.add(new Vector3D(model.character.getWidth() / 2, model.character.getHeight() / 2, INITDISTANCE));
-		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add((characterHover.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION)));
-		this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);
+		if (!splashMode) {
+			this.characterHover = model.character.characterPosition.add(new Vector3D(model.character.getWidth() / 2, model.character.getHeight() / 2, INITDISTANCE));
+			this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add((characterHover.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION)));
+			this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);
+		}
 		
 		float whRatio = (float) WIDTH / (float) HEIGHT;
 		GLU.gluPerspective(45, whRatio, 1, 1000);

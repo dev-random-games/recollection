@@ -56,6 +56,10 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
+		AnimationSprite splash = new AnimationSprite(-3200, -2400, 1600, 1200, 1, 20, "/data/misc/titlesub.png");
+		splash.addFrame("/data/misc/titlesubspace.png");
+		sprites.add(splash);
+		
 		character = new Character(new TextureSprite(0, 0, 30, 30, 10, "/data/char/goodWalk5.png"), "standing");
 		
 		AnimationSprite walking = new AnimationSprite(0, 0, 30, 30, 10, 2, "/data/char/goodWalk1.png");

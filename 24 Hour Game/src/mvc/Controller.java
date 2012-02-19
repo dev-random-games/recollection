@@ -34,6 +34,7 @@ public class Controller extends Thread {
 	public Controller(Model model, View view){
 		this.model = model;
 		this.view = view;
+		
 		/*
 		 * A Key Dispatcher doesn't rely on the focus.1
 		 * All key events will be captured.
@@ -67,47 +68,53 @@ public class Controller extends Thread {
 				}
 			}
 			
-			/*
-			 * Catch mouse events
-			 */
-			if (Mouse.isButtonDown(0)){
-				if (!mouseDown){
-					mouseDown = true;
-					mousePressed(Mouse.getX(), Mouse.getY());
+			if (!view.splashMode) {
+				/*
+				 * Catch mouse events
+				 */
+				if (Mouse.isButtonDown(0)){
+					if (!mouseDown){
+						mouseDown = true;
+						mousePressed(Mouse.getX(), Mouse.getY());
+					}
+				} else if (mouseDown){
+					mouseDown = false;
+					mouseReleased(Mouse.getX(), Mouse.getY());
 				}
-			} else if (mouseDown){
-				mouseDown = false;
-				mouseReleased(Mouse.getX(), Mouse.getY());
-			}
-			
-			if (keysPressed[Keyboard.KEY_UP]){
-				Vector3D movementVector = new Vector3D(0, moveSensitivity, 0);
-				Vector3D up = new Vector3D(0, 0, 1);
-				model.character.characterVelocity = model.character.characterVelocity.add(movementVector.multiply(up.rotationM((float) (model.character.rot * Math.PI / 180))));
-			}
-//			if (keysPressed[Keyboard.KEY_A]){
-//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(-1, 0, 0));
-//			}
-//			if (keysPressed[Keyboard.KEY_S]){
-//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, -1, 0));
-//			}
-//			if (keysPressed[Keyboard.KEY_D]){
-//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(1, 0, 0));
-//			}
-			if (keysPressed[Keyboard.KEY_LEFT]){
-				model.character.setRot(model.character.rot + rotSensitivity);
-			}
-//			iSf (keysPressed[Keyboard.KEY_UP]){
-//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, 1, 0));
-//			}
-			if (keysPressed[Keyboard.KEY_RIGHT]){
-				model.character.setRot(model.character.rot - rotSensitivity);
-			}
-			if (keysPressed[Keyboard.KEY_DOWN]){
 				
+				if (keysPressed[Keyboard.KEY_UP]){
+					Vector3D movementVector = new Vector3D(0, moveSensitivity, 0);
+					Vector3D up = new Vector3D(0, 0, 1);
+					model.character.characterVelocity = model.character.characterVelocity.add(movementVector.multiply(up.rotationM((float) (model.character.rot * Math.PI / 180))));
+				}
+	//			if (keysPressed[Keyboard.KEY_A]){
+	//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(-1, 0, 0));
+	//			}
+	//			if (keysPressed[Keyboard.KEY_S]){
+	//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, -1, 0));
+	//			}
+	//			if (keysPressed[Keyboard.KEY_D]){
+	//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(1, 0, 0));
+	//			}
+				if (keysPressed[Keyboard.KEY_LEFT]){
+					model.character.setRot(model.character.rot + rotSensitivity);
+				}
+	//			iSf (keysPressed[Keyboard.KEY_UP]){
+	//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, 1, 0));
+	//			}
+				if (keysPressed[Keyboard.KEY_RIGHT]){
+					model.character.setRot(model.character.rot - rotSensitivity);
+				}
+				if (keysPressed[Keyboard.KEY_DOWN]){
+					
+				}
+				if (keysPressed[Keyboard.KEY_E]){
+					model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
+				}
 			}
-			if (keysPressed[Keyboard.KEY_E]){
-				model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
+			if (keysPressed[Keyboard.KEY_SPACE]){
+				view.splashMode = false;
+				view.viewTranslation = model.character.characterPosition.add(new Vector3D(15, 15, 50));
 			}
 			if (keysPressed[Keyboard.KEY_ESCAPE]){
 				AL.destroy();
