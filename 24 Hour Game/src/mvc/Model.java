@@ -86,18 +86,18 @@ public class Model extends Thread {
 		
 		sprites.add(character);
 		
-		AnimationSprite torch = new AnimationSprite(60, 900, 32, 32, 20, 3, "/data/scenery/torch0.png");
-		torch.addFrame("data/scenery/torch1.png");
-		torch.addFrame("data/scenery/torch2.png");
-		torch.addFrame("data/scenery/torch3.png");
-		torch.addFrame("data/scenery/torch2.png");
-		torch.addFrame("data/scenery/torch1.png");
-		
-		sprites.add(torch);
-		
-		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
-		
-		sprites.add(blood0);
+//		AnimationSprite torch = new AnimationSprite(60, 900, 32, 32, 20, 3, "/data/scenery/torch0.png");
+//		torch.addFrame("data/scenery/torch1.png");
+//		torch.addFrame("data/scenery/torch2.png");
+//		torch.addFrame("data/scenery/torch3.png");
+//		torch.addFrame("data/sceSnery/torch2.png");
+//		torch.addFrame("data/scenery/torch1.png");
+//		
+//		sprites.add(torch);
+//		
+//		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
+//		
+//		sprites.add(blood0);
 		
 //		TextureSprite torch = new TextureSprite(60, 900, 32, 32, 10, "/data/scenery/torch0.png");
 		chunks = new Chunk[0][0];
