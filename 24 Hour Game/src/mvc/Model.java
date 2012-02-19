@@ -65,14 +65,14 @@ public class Model extends Thread {
 		
 		chunks = new Chunk[0][0];
 		
-		Chunk testChunk = new Chunk(0, 0);
+//		Chunk testChunk = new Chunk(0, 0);
 		
-		testChunk.loadChunk("/data/levels/testChunk.png");
-		testChunk.setState(false);
+//		testChunk.loadChunk("/data/levels/testChunk.png");
+//		testChunk.setState(false);
 		
-		sprites.add(testChunk);
+//		sprites.add(testChunk);
 		
-		ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt");
+		ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
 //		testChunk.tilesA[0][20] = 1; 
 //		testChunk.tilesA[1][21] = 1; 

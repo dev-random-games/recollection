@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 
@@ -20,6 +22,8 @@ public class Chunk extends Sprite{
 	public int[][] tilesA, tilesB;
 	
 	public boolean tileState = true; // True = tilesA, false = tilesB
+	
+	Hashtable<String, Boolean> entrySwitches;	//Changes to other chunks that will change when this one is entered
 	
 	/*
 	 * Definitions of tile values
@@ -46,6 +50,8 @@ public class Chunk extends Sprite{
 		wallSprite = new Wall(0, 0, WALLDIMENSION, WALLDIMENSION);
 //		wallSprite = new TextureExtrudeSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 1000, "data/textures/stone.png");
 		stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/stone.png");
+		
+		entrySwitches = new Hashtable<String, Boolean>();
 	}
 	
 	@Override
