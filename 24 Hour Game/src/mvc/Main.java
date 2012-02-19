@@ -26,6 +26,7 @@ public class Main extends Thread {
 		model.start();
 		controller.start();
 		view.start();
+	
 	}
 
 }
