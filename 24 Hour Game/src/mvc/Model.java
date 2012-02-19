@@ -119,8 +119,8 @@ public class Model extends Thread {
 		sprites.add(new TextureSprite(6000, 4000, 1600, 1200, 1, "/data/misc/michael.png"));
 		sprites.add(new TextureSprite(10000, 4000, 1600, 1200, 1, "/data/misc/lane.png"));
 		
-		sprites.add(new TextureSprite(-10000, -10000, 800, 800, 1, "/data/textures/scroll1.png"));
-		sprites.add(new TextureSprite(-20000, -20000, 800, 800, 1, "/data/textures/scroll2.png"));
+		sprites.add(new TextureSprite(-10000, -10000, 800, 800, 1, "/data/misc/scroll1.png"));
+		sprites.add(new TextureSprite(-20000, -20000, 800, 800, 1, "/data/misc/scroll2.png"));
 //		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
 //		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);

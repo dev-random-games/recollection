@@ -202,6 +202,16 @@ public class View extends Thread {
 	 */
 	@SuppressWarnings("deprecation")
 	public void run(){
+		
+		if (model.win >= 0 && model.character.health <= 0) {
+			try {
+				rollCredits();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		/*
 		 * Create a new display, which all of the GL11 commands will be applied to.
 		 */
@@ -289,7 +299,7 @@ public class View extends Thread {
 		splashMode = true;
 		
 		viewTranslation = new Vector3D(-9500, -9500, SPLASHDISTANCE);
-		Thread.sleep(8000);
+		Thread.sleep(5000);
 		viewTranslation = new Vector3D(6610, 4950, SPLASHDISTANCE);
 		Thread.sleep(5000);
 		viewTranslation = new Vector3D(14610, 4950, SPLASHDISTANCE);

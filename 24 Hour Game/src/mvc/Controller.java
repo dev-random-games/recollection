@@ -128,7 +128,7 @@ public class Controller extends Thread {
 			} else if (keysPressed[Keyboard.KEY_SPACE]){
 				view.viewTranslation = new Vector3D(-9500, -9500, view.SPLASHDISTANCE);
 				try {
-					Thread.sleep(8000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
