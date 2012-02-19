@@ -1,9 +1,9 @@
 # of rows
 # of columns
 
-roomName1              roomName2                           roomName3
-roomName4:roomName1->B roomName5                           roomName6
-roomName7              roomName8:roomName2->A,roomName3->B roomName9
+roomName1        roomName2               roomName3
+roomName4:0_0->B roomName5               roomName6
+roomName7        roomName8:0_1->A,0_2->B roomName9
 
 roomName1.floorTex -> fire
 roomName6.music -> spooky3
@@ -17,6 +17,8 @@ Parameters:
 floorTex
 wallTex
 music
+
+0_0 means x_y
 
 
 Room name should be something like room1_5 for the room at (1, 5)

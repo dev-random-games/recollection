@@ -185,14 +185,15 @@ public class Model extends Thread {
 			}
 			rtree = newTree;
 			rtreeGen = true;
-			
-//			for (Chunk[] chunkSublist : chunks){
-//				for (Chunk chunk : chunkSublist){
-//					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
-//						System.out.println(chunk.getId());
-//					}
-//				}
-//			}
+
+			for (Chunk[] chunkSublist : chunks){
+				for (Chunk chunk : chunkSublist){
+					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
+						chunk.activateSwitches(chunks);
+						System.out.println(character.getBoundingBox().getX());
+					}
+				}
+			}
 			
 			try {
 				Thread.sleep(10);
