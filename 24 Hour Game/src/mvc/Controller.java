@@ -83,7 +83,12 @@ public class Controller extends Thread {
 				}
 				
 				if (keysPressed[Keyboard.KEY_UP]){
-					Vector3D movementVector = new Vector3D(0, moveSensitivity, 0);
+					Vector3D movementVector = null;
+					if (Model.rumble > 25){
+						movementVector = new Vector3D(0, moveSensitivity * 25 / Model.rumble, 0);
+					} else {
+						movementVector = new Vector3D(0, moveSensitivity, 0);
+					}
 					Vector3D up = new Vector3D(0, 0, 1);
 					model.character.characterVelocity = model.character.characterVelocity.add(movementVector.multiply(up.rotationM((float) (model.character.rot * Math.PI / 180))));
 				}

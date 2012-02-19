@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -219,12 +220,12 @@ public class View extends Thread {
 		/*
 		 * Enable masking transparency.
 		 */
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);	
+//		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);	
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
-		GL11.glClearColor(1f, 1f, 1f, 1f);
+		GL11.glClearColor(0f, 0f, 0f, 1f);
 		
 		while (!Display.isCloseRequested()) {
 			try {
@@ -236,6 +237,13 @@ public class View extends Thread {
 			 * All OpenGL Display code goes here!
 			 */
 //			focalPoint = model.characterPosition;
+			
+			if (Model.rumble > 2){
+				viewTranslation = new Vector3D(viewTranslation.getX(), viewTranslation.getY(), INITDISTANCE + new Random().nextInt(Model.rumble / 2) - Model.rumble / 4);
+				Model.rumble--;
+			} else {
+				Model.rumble = 0;
+			}
 			
 			setCamera(); // *DO NOT CHANGE THIS*
 			float viewScale = 1;

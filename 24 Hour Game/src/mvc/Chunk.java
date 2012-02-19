@@ -11,10 +11,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk extends Sprite{
@@ -160,6 +162,14 @@ public class Chunk extends Sprite{
 		this.tileState = tileState;
 	}
 	
+	public String getState(){
+		if (tileState){
+			return "A";
+		} else {
+			return "B";
+		}
+	}
+	
 	/*
 	 * Activate all switches for the current location
 	 */
@@ -174,8 +184,20 @@ public class Chunk extends Sprite{
 			String loc = pairs.getKey();
 			String[] coords = loc.split("_");
 			//System.out.println(pairs.getValue());
-			chunks[Integer.parseInt(coords[0])][Integer.parseInt(coords[1])].setState(pairs.getValue());
-			System.out.println(Integer.parseInt(coords[0]) + ", " + Integer.parseInt(coords[1]));
+			int x = Integer.parseInt(coords[0]);
+			int y = Integer.parseInt(coords[1]);
+			if (!chunks[x][y].getState().equals(pairs.getValue() ? "A" : "B")){
+				chunks[x][y].setState(pairs.getValue());
+				System.out.println("CHANGE");
+				Random random = new Random();
+				try {
+					AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/effects/rock-slide-" + random.nextInt(5) + ".ogg")).playAsSoundEffect(1.0f, 1.0f, false);
+					Model.rumble = random.nextInt(50) + 50;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 	}
 }
