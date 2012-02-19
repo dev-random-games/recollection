@@ -54,7 +54,7 @@ public class View extends Thread {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 800;
-	public static final int INITDISTANCE = 1000;	//Initial distance of view from z=0
+	public static final int INITDISTANCE = 250;	//Initial distance of view from z=0
 	
 	// If true and available, full screen mode will be used.
 	private static final boolean FULLSCREENENABLED = false;
