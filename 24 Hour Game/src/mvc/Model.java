@@ -88,18 +88,18 @@ public class Model extends Thread {
 		
 		sprites.add(character);
 		
-		AnimationSprite torch = new AnimationSprite(60, 900, 32, 32, 20, 3, "/data/scenery/torch0.png");
-		torch.addFrame("data/scenery/torch1.png");
-		torch.addFrame("data/scenery/torch2.png");
-		torch.addFrame("data/scenery/torch3.png");
-		torch.addFrame("data/scenery/torch2.png");
-		torch.addFrame("data/scenery/torch1.png");
-		
-		sprites.add(torch);
-		
-		TextureSprite blood0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
-		
-		sprites.add(blood0);
+//		AnimationSprite torch = new AnimationSprite(60, 900, 32, 32, 20, 3, "/data/scenery/torch0.png");
+//		torch.addFrame("data/scenery/torch1.png");
+//		torch.addFrame("data/scenery/torch2.png");
+//		torch.addFrame("data/scenery/torch3.png");
+//		torch.addFrame("data/sceSnery/torch2.png");
+//		torch.addFrame("data/scenery/torch1.png");
+//		
+//		sprites.add(torch);
+//		
+//		TextureSprite bloSod0 = new TextureSprite(90, 880, 32, 32, 1, "/data/scenery/blood2.png");
+//		
+//		sprites.add(blood0);
 		
 //		TextureSprite torch = new TextureSprite(60, 900, 32, 32, 10, "/data/scenery/torch0.png");
 		chunks = new Chunk[0][0];
@@ -113,6 +113,9 @@ public class Model extends Thread {
 		
 		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
+//		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
+//		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 10);
+//		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
 //		Spectre spectre = new Spectre(new TextureSprite(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 30, 30, 10, "/data/char/spectre.png"), "default");
 //		spectres.add(spectre);
 //		sprites.add(spectre);

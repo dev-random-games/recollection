@@ -39,6 +39,7 @@ public class Chunk extends Sprite{
 	 */
 	public static final int STONE = 0;
 	public static final int WALL = 1;
+	public static final int BLOOD = 3;
 	public static final int GRADIENT = 2;
 	
 	/*
@@ -46,6 +47,7 @@ public class Chunk extends Sprite{
 	 */
 	private Sprite wallSprite;
 	private Sprite stoneSprite;
+	private Sprite bloodSprite;
 	private Sprite gradientSprite;
 	
 	int x, y;
@@ -63,6 +65,7 @@ public class Chunk extends Sprite{
 		wallSprite = new Wall(0, 0, WALLDIMENSION, WALLDIMENSION);
 //		wallSprite = new TextureExtrudeSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 1000, "data/textures/stone.png");
 		stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/stone.png");
+		bloodSprite = new TextureSprite(0, 0,WALLDIMENSION, WALLDIMENSION, 0, "/data/scenery/blood" + new Random().nextInt(4) + ".png");
 		gradientSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/gradient.png");
 		
 		entrySwitches = new Hashtable<String, Boolean>();
@@ -97,6 +100,7 @@ public class Chunk extends Sprite{
 				 */
 				wallSprite.move(x1, y1);
 				stoneSprite.move(x1, y1);
+				bloodSprite.move(x1, y1);
 				
 				if (tile == WALL){
 //					new Wall(x1, y1, WALLDIMENSION, WALLDIMENSION).draw();
@@ -104,6 +108,8 @@ public class Chunk extends Sprite{
 				} else if (tile == STONE){
 					stoneSprite.draw();
 //					new RectSprite(x1, y1, WALLDIMENSION, WALLDIMENSION, 0, Color.gray).draw();
+				} else if (tile == BLOOD){
+					bloodSprite.draw();
 				}
 			}
 		}
@@ -142,6 +148,8 @@ public class Chunk extends Sprite{
 					
 					if (red == 0 && blue == 0 && green == 0){
 						tilesA[x][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
+					} else if (red == 255 && blue == 0 && green == 0){
+						tilesA[x][CHUNKDIMENSION - 1 - y] = BLOOD;
 					} else if (red == 255 && blue == 255 && green == 0){
 						Spectre spectre = new Spectre(new TextureSprite(x * WALLDIMENSION + this.x, (CHUNKDIMENSION - y) * WALLDIMENSION + this.y, 30, 30, 10, "/data/char/spectre.png"), "default");
 						System.out.println("SPECTRE: " + spectre.spectrePosition.getX() + ", " + spectre.spectrePosition.getY());
@@ -162,6 +170,8 @@ public class Chunk extends Sprite{
 					
 					if (red == 0 && blue == 0 && green == 0){
 						tilesB[x - 33][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
+					} else if (red == 255 && blue == 0 && green == 0){
+						tilesB[x - 33][CHUNKDIMENSION - 1 - y] = BLOOD;
 					}
 				}
 			}
