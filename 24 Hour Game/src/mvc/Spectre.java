@@ -32,14 +32,6 @@ public class Spectre extends MultiSprite{
 	
 	@Override
 	public void draw() {
-//		if (curSpriteName.equals("walking")){
-//			int f = ((AnimationSprite) curSprite).getFrameCount();
-//			int delay = ((AnimationSprite) curSprite).frameDelay;
-////			System.out.println(f);
-//			if (f == 0 * delay || f == 9 * delay){
-//				System.out.println("Step");
-//			}
-//		}
 		curSprite.setRot(rot);
 		curSprite.draw();
 	}
