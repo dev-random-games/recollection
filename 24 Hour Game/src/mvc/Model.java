@@ -1,5 +1,6 @@
 package mvc;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -191,36 +192,53 @@ public class Model extends Thread {
 	/**
 	 * This is the main loop of the program -- should call iterate() in APOPS.
 	 */
+	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
+			//System.out.println(character.characterVelocity.toString());
+			
 			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
 //			Character tempCharacter = new Character(null, null);
 //			Vector3D tempCharacterPosition = character.characterPosition.add(character.characterVelocity);
 //			tempCharacter.characterPosition = tempCharacterPosition;
-			ArrayList<Sprite> interChar = rtree.getIntersectingSprites(character);
-			boolean intersecting = false;
-			
-			Vector3D tempPosition = character.characterPosition.add(character.characterVelocity);
-			
-			Chunk c = chunks[Math.abs((int) tempPosition.getX() / Chunk.CHUNKDIMENSION)][Math.abs((int) tempPosition.getY() / Chunk.CHUNKDIMENSION)];
-			int inChunkX = (int) tempPosition.getX() % Chunk.CHUNKDIMENSION;
-			int inChunkY = (int) tempPosition.getY() % Chunk.CHUNKDIMENSION;
-			if (!(((c.tilesA[inChunkX][inChunkY] == 1) && c.tileState) || 
-					((c.tilesB[inChunkX][inChunkY] == 1) && (!c.tileState)))) {
-				character.characterPosition = character.characterPosition.add(character.characterVelocity);
-				character.setX(character.characterPosition.getX());
-				character.setY(character.characterPosition.getY());
-			}
+//			ArrayList<Sprite> interChar = rtree.getIntersectingSprites(character);
+//			boolean intersecting = false;
+//			
+//			Vector3D tempPosition = character.characterPosition.add(character.characterVelocity);
+//			
+//			//System.out.println(">>>" + Math.abs((int) tempPosition.getX() / Chunk.CHUNKDIMENSION) + ' ' + Math.abs((int) tempPosition.getY() / Chunk.CHUNKDIMENSION));
+//			int chunkX = (int) tempPosition.getX() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			int chunkY = (int) tempPosition.getY() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			int inChunkPixelsX = ((int) tempPosition.getX()) % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			int inChunkPixelsY = ((int) tempPosition.getY()) % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			int inChunkTilesX = inChunkPixelsX / Chunk.WALLDIMENSION;
+//			int inChunkTilesY = inChunkPixelsY / Chunk.WALLDIMENSION;
+//			System.out.println("Tiles: " + inChunkTilesX + "," + inChunkTilesY + " Pixels: " + inChunkPixelsX + "," + inChunkPixelsY);
+//			//Chunk c = chunks[Math.abs((int) tempPosition.getX() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION))][Math.abs((int) tempPosition.getY() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION))];
+//			Chunk c = chunks[chunkX][chunkY];
+//			//int inChunkX = (int) tempPosition.getX() % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			//int inChunkY = (int) tempPosition.getY() % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
+//			boolean collidingWithA = (c.tilesA[inChunkTilesX][inChunkTilesY] == 1) && c.tileState;
+//			boolean collidingWithB = (c.tilesB[inChunkTilesX][inChunkTilesY] == 1) && !c.tileState;
+//			boolean colliding = collidingWithA || collidingWithB;
+//			if (!colliding) {
+//			//if (!(((c.tilesA[inChunkTilesX][inChunkTilesY] == 1) && c.tileState) || 
+//					//((c.tilesB[inChunkTilesX][inChunkTilesY] == 1) && (!c.tileState)))) {
+//				character.characterPosition = character.characterPosition.add(character.characterVelocity);
+//				character.setX(character.characterPosition.getX());
+//				character.setY(character.characterPosition.getY());
+//			//}
+//			}
 			
 			character.characterPosition = character.characterPosition.add(character.characterVelocity);
 			
 			if (character.characterVelocity.length() > 0.1){
 				character.setSprite("walking");
-				System.out.println("test");
+				//System.out.println("test");
 			} else {
 				character.setSprite("standing");
 			}
-			System.out.println(character.curSpriteName);
+			//System.out.println(character.curSpriteName);
 			
 			character.setX(character.characterPosition.getX());
 			character.setY(character.characterPosition.getY());
@@ -239,7 +257,34 @@ public class Model extends Thread {
 				for (Chunk chunk : chunkSublist){
 					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
 						chunk.activateSwitches(chunks);
-						System.out.println(character.getBoundingBox().getX());
+						/*
+						 * Calculate the local bounding box for the player within the rectangle
+						 */
+						Rectangle playerRect = character.getBoundingBox();
+						playerRect.move((int) (playerRect.getX() - chunk.getBoundingBox().getX()), (int) (playerRect.getY() - chunk.getBoundingBox().getY()));
+						for (int x = 0; x < Chunk.CHUNKDIMENSION; x++){
+							for (int y = 0; y < Chunk.CHUNKDIMENSION; y++){
+								if (chunk.getTiles()[x][y] == Chunk.WALL){ 
+									Rectangle tileRect = new Rectangle(x * Chunk.WALLDIMENSION, y * Chunk.WALLDIMENSION, Chunk.WALLDIMENSION, Chunk.WALLDIMENSION);
+									if (playerRect.intersects(tileRect)){
+										Rectangle collisionRect = tileRect.intersection(playerRect);
+										if (collisionRect.getHeight() > collisionRect.getWidth()){
+											if (collisionRect.getX() == playerRect.getX()){
+												character.characterPosition = character.characterPosition.add(new Vector3D((int) collisionRect.getWidth(), 0, 0));
+											} else {
+												character.characterPosition = character.characterPosition.add(new Vector3D(- (int) collisionRect.getWidth(), 0, 0));
+											}
+										} else {
+											if (collisionRect.getY() == playerRect.getY()){
+												character.characterPosition = character.characterPosition.add(new Vector3D(0, (int) collisionRect.getHeight(), 0));
+											} else {
+												character.characterPosition = character.characterPosition.add(new Vector3D(0, - (int) collisionRect.getHeight(), 0));
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
