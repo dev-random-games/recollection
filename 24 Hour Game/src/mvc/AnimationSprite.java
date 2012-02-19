@@ -61,6 +61,8 @@ public class AnimationSprite extends Sprite{
 			}
 		}
 		
+		System.out.println("ANIM");
+		
 		Texture currentTexture = frames.get((int) (frameCount / frameDelay));
 		
 		/*
@@ -112,6 +114,10 @@ public class AnimationSprite extends Sprite{
 		}
 		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
+	}
+	
+	public void setRot(float r){
+		this.r = r;
 	}
 
 }

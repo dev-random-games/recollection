@@ -42,4 +42,11 @@ public abstract class Sprite{
 		p.setX(x);
 		p.setY(y);
 	}
+	
+	/*
+	 * Does nothing by default -- use if possible.
+	 */
+	public void setRot(float rot){
+		
+	}
 }

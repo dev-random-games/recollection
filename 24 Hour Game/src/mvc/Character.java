@@ -4,17 +4,17 @@ import java.util.HashMap;
 
 public class Character extends MultiSprite {
 	
-	HashMap<String, TextureSprite> sprites;
-	private TextureSprite curSprite;	//Current sprite;
+	HashMap<String, Sprite> sprites;
+//	private Sprite curSprite;	//Current sprite;
 	
 	Vector3D characterVelocity, characterPosition;
 	float characterSensitivity;
 	float rot;
 	
-	public Character(TextureSprite initialSprite, String spriteName) {
+	public Character(Sprite initialSprite, String spriteName) {
 		super(initialSprite, spriteName);
 		
-		sprites = new HashMap<String, TextureSprite>();
+		sprites = new HashMap<String, Sprite>();
 		sprites.put(spriteName, initialSprite);
 		
 		curSprite = initialSprite;
@@ -36,10 +36,10 @@ public class Character extends MultiSprite {
 	}
 	
 	public float getWidth() {
-		return curSprite.getWidth();
+		return (float) curSprite.getBoundingBox().getWidth();
 	}
 	
 	public float getHeight() {
-		return curSprite.getHeight();
+		return (float) curSprite.getBoundingBox().getHeight();
 	}
 }

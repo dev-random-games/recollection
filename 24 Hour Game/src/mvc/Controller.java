@@ -45,7 +45,7 @@ public class Controller extends Thread {
 		mouseDown = false;
 		
 		rotSensitivity = 2f;
-		moveSensitivity = .05f;
+		moveSensitivity = .03f;
 	}
 	
 	public void run(){
