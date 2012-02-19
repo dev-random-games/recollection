@@ -20,7 +20,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Chunk extends Sprite{
 
 	public static final int CHUNKDIMENSION = 32; // The number of walls/pixels on each side of the chunk
-	public static final int WALLDIMENSION = 10;	 // The number of pixels on each side of a wall.
+	public static final int WALLDIMENSION = 15;	 // The number of pixels on each side of a wall.
 	
 	public int[][] tilesA, tilesB;
 	

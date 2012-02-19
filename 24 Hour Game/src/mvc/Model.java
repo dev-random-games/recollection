@@ -55,7 +55,28 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		character = new Character(new TextureSprite(20, 20, 16, 16, 10, "/data/char/standing.png"), "standing");
+		character = new Character(new TextureSprite(0, 0, 32, 32, 10, "/data/char/goodWalk5.png"), "standing");
+		
+		AnimationSprite walking = new AnimationSprite(0, 0, 32, 32, 10, 3, "/data/char/goodWalk1.png");
+		walking.addFrame("/data/char/goodWalk2.png");
+		walking.addFrame("/data/char/goodWalk3.png");
+		walking.addFrame("/data/char/goodWalk4.png");
+		walking.addFrame("/data/char/goodWalk5.png");
+		walking.addFrame("/data/char/goodWalk6.png");
+		walking.addFrame("/data/char/goodWalk7.png");
+		walking.addFrame("/data/char/goodWalk8.png");
+		walking.addFrame("/data/char/goodWalk9.png");
+		walking.addFrame("/data/char/goodWalk9.png");
+		walking.addFrame("/data/char/goodWalk8.png");
+		walking.addFrame("/data/char/goodWalk7.png");
+		walking.addFrame("/data/char/goodWalk6.png");
+		walking.addFrame("/data/char/goodWalk5.png");
+		walking.addFrame("/data/char/goodWalk4.png");
+		walking.addFrame("/data/char/goodWalk3.png");
+		walking.addFrame("/data/char/goodWalk2.png");
+		walking.addFrame("/data/char/goodWalk1.png");
+		
+		character.addSprite(walking, "walking");
 		
 		sprites.add(character);
 		
@@ -190,6 +211,19 @@ public class Model extends Thread {
 				character.setX(character.characterPosition.getX());
 				character.setY(character.characterPosition.getY());
 			}
+			
+			character.characterPosition = character.characterPosition.add(character.characterVelocity);
+			
+			if (character.characterVelocity.length() > 0.1){
+				character.setSprite("walking");
+				System.out.println("test");
+			} else {
+				character.setSprite("standing");
+			}
+			System.out.println(character.curSpriteName);
+			
+			character.setX(character.characterPosition.getX());
+			character.setY(character.characterPosition.getY());
 
 //			this.viewTranslation = this.viewTranslation.add(tShis.cameraVelocity);
 			

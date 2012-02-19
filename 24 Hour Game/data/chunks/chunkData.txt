@@ -1,5 +1,7 @@
-2
-2
+4
+4
 
-chunk_ending:0_1->B chunk_ending:1_1->B
-chunk_ending:1_0->B chunk_ending:0_1->A
+chunk_ending:0_1->B        chunk_ending:1_1->B chunk_base chunk_base
+chunk_ending:1_0->B,0_2->B chunk_ending:0_1->A chunk_base chunk_base
+chunk_dead_end             chunk_dead_end      chunk_base chunk_base
+chunk_base                 chunk_base          chunk_base chunk_base
