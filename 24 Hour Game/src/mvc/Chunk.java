@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk extends Sprite{
@@ -23,8 +24,14 @@ public class Chunk extends Sprite{
 	/*
 	 * Definitions of tile values
 	 */
-	public static final int SPACE = 0;
+	public static final int STONE = 0;
 	public static final int WALL = 1;
+	
+	/*
+	 * Buffered sprites for drawing tiles
+	 */
+	private Sprite wallSprite;
+	private Sprite stoneSprite;
 	
 	int x, y;
 	
@@ -35,6 +42,10 @@ public class Chunk extends Sprite{
 		this.y = y;
 		tilesA = new int[CHUNKDIMENSION][CHUNKDIMENSION];
 		tilesB = new int[CHUNKDIMENSION][CHUNKDIMENSION];
+		
+		wallSprite = new Wall(0, 0, WALLDIMENSION, WALLDIMENSION);
+//		wallSprite = new TextureExtrudeSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 1000, "data/textures/stone.png");
+		stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/stone.png");
 	}
 	
 	@Override
@@ -53,10 +64,20 @@ public class Chunk extends Sprite{
 		for (int x = 0; x < CHUNKDIMENSION; x++){
 			for (int y = 0; y < CHUNKDIMENSION; y++){
 				int tile = tiles[x][y];
+				int x1 = this.x + WALLDIMENSION * x;
+				int y1 = this.y + WALLDIMENSION * y;
+				/*
+				 * Move all buffered sprites
+				 */
+				wallSprite.move(x1, y1);
+				stoneSprite.move(x1, y1);
+				
 				if (tile == WALL){
-					new Wall(this.x + WALLDIMENSION * x, this.y + WALLDIMENSION * y, WALLDIMENSION, WALLDIMENSION).draw();
-				} else if (tile == SPACE){
-//					new Wall(this.x + WALLDIMENSION * x, this.y + WALLDIMENSION * y, WALLDIMENSION, WALLDIMENSION).draw();
+//					new Wall(x1, y1, WALLDIMENSION, WALLDIMENSION).draw();
+					wallSprite.draw();
+				} else if (tile == STONE){
+					stoneSprite.draw();
+//					new RectSprite(x1, y1, WALLDIMENSION, WALLDIMENSION, 0, Color.gray).draw();
 				}
 			}
 		}

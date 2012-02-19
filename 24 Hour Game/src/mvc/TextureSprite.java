@@ -85,14 +85,14 @@ public class TextureSprite extends Sprite{
 		 * Draw outline
 		 */
 		
-		GL11.glColor3f(0, 0, 0);
-		
-		GL11.glBegin(GL11.GL_LINE_LOOP);
-		GL11.glVertex3f(-xDist, -yDist, p.getZ());
-		GL11.glVertex3f(xDist, -yDist, p.getZ());
-		GL11.glVertex3f(xDist, yDist, p.getZ());
-		GL11.glVertex3f(-xDist, yDist, p.getZ());
-		GL11.glEnd();
+//		GL11.glColor3f(0, 0, 0);
+//		
+//		GL11.glBegin(GL11.GL_LINE_LOOP);
+//		GL11.glVertex3f(-xDist, -yDist, p.getZ());
+//		GL11.glVertex3f(xDist, -yDist, p.getZ());
+//		GL11.glVertex3f(xDist, yDist, p.getZ());
+//		GL11.glVertex3f(-xDist, yDist, p.getZ());
+//		GL11.glEnd();
 		
 		GL11.glPopMatrix();
 		

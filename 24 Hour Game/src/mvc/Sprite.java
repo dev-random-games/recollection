@@ -33,4 +33,9 @@ public abstract class Sprite{
 	public boolean equals(Sprite sprite){
 		return uniqueId == sprite.uniqueId;
 	}
+	
+	public void move(float x, float y){
+		p.setX(x);
+		p.setY(y);
+	}
 }
