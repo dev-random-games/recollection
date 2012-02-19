@@ -142,6 +142,11 @@ public class Chunk extends Sprite{
 					
 					if (red == 0 && blue == 0 && green == 0){
 						tilesA[x][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
+					} else if (red == 255 && blue == 255 && green == 0){
+						Spectre spectre = new Spectre(new TextureSprite(x * WALLDIMENSION + this.x, (CHUNKDIMENSION - y) * WALLDIMENSION + this.y, 30, 30, 10, "/data/char/spectre.png"), "default");
+						System.out.println("SPECTRE: " + spectre.spectrePosition.getX() + ", " + spectre.spectrePosition.getY());
+						Model.spectres.add(spectre);
+						Model.sprites.add(spectre);
 					}
 				}
 			}

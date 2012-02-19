@@ -31,9 +31,10 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Model extends Thread {
 
-	public ArrayList<Sprite> sprites;
+	public static ArrayList<Sprite> sprites;
 	public ArrayList<Light> lights;
 	public Character character;
+	public static ArrayList<Spectre> spectres;
 	
 	/*
 	 * audio files
@@ -56,6 +57,7 @@ public class Model extends Thread {
 		sprites = new ArrayList<Sprite>();
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
+		spectres = new ArrayList<Spectre>();
 		
 		AnimationSprite splash = new AnimationSprite(-3200, -2400, 1600, 1200, 1, 20, "/data/misc/titlesub.png");
 		splash.addFrame("/data/misc/titlesubspace.png");
@@ -111,8 +113,12 @@ public class Model extends Thread {
 		
 		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
+//		Spectre spectre = new Spectre(new TextureSprite(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 30, 30, 10, "/data/char/spectre.png"), "default");
+//		spectres.add(spectre);
+//		sprites.add(spectre);
+		
 		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
-		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80, 10);
+		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
 
 		Light light = new Light();
@@ -215,40 +221,30 @@ public class Model extends Thread {
 	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
+			
+			/*
+			 * To all spectre stuff
+			 */
+			for (Spectre spectre : spectres){
+				spectre.spectreVelocity = spectre.spectreVelocity.add(character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(.01f));
+				spectre.spectrePosition = spectre.spectrePosition.add(spectre.spectreVelocity);
+				spectre.spectreVelocity = spectre.spectreVelocity.scale(.9f);
+				spectre.setX(spectre.spectrePosition.getX());
+				spectre.setY(spectre.spectrePosition.getY());
+				if (spectre.spectrePosition.subtract(character.characterPosition).length() <= 25){
+					character.hurt(spectre.getDamage());
+					character.characterVelocity = character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(2f);
+					System.out.println("Health: " + character.health);
+					if (character.health <= 0){
+						System.exit(0);
+					}
+				}
+//				System.out.println(spectre.spectreVelocity.toString());
+			}
+			
 			System.out.println(character.characterPosition.toString());
 			
 			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
-//			Character tempCharacter = new Character(null, null);
-//			Vector3D tempCharacterPosition = character.characterPosition.add(character.characterVelocity);
-//			tempCharacter.characterPosition = tempCharacterPosition;
-//			ArrayList<Sprite> interChar = rtree.getIntersectingSprites(character);
-//			boolean intersecting = false;
-//			
-//			Vector3D tempPosition = character.characterPosition.add(character.characterVelocity);
-//			
-//			//System.out.println(">>>" + Math.abs((int) tempPosition.getX() / Chunk.CHUNKDIMENSION) + ' ' + Math.abs((int) tempPosition.getY() / Chunk.CHUNKDIMENSION));
-//			int chunkX = (int) tempPosition.getX() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			int chunkY = (int) tempPosition.getY() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			int inChunkPixelsX = ((int) tempPosition.getX()) % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			int inChunkPixelsY = ((int) tempPosition.getY()) % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			int inChunkTilesX = inChunkPixelsX / Chunk.WALLDIMENSION;
-//			int inChunkTilesY = inChunkPixelsY / Chunk.WALLDIMENSION;
-//			System.out.println("Tiles: " + inChunkTilesX + "," + inChunkTilesY + " Pixels: " + inChunkPixelsX + "," + inChunkPixelsY);
-//			//Chunk c = chunks[Math.abs((int) tempPosition.getX() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION))][Math.abs((int) tempPosition.getY() / (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION))];
-//			Chunk c = chunks[chunkX][chunkY];
-//			//int inChunkX = (int) tempPosition.getX() % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			//int inChunkY = (int) tempPosition.getY() % (Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION);
-//			boolean collidingWithA = (c.tilesA[inChunkTilesX][inChunkTilesY] == 1) && c.tileState;
-//			boolean collidingWithB = (c.tilesB[inChunkTilesX][inChunkTilesY] == 1) && !c.tileState;
-//			boolean colliding = collidingWithA || collidingWithB;
-//			if (!colliding) {
-//			//if (!(((c.tilesA[inChunkTilesX][inChunkTilesY] == 1) && c.tileState) || 
-//					//((c.tilesB[inChunkTilesX][inChunkTilesY] == 1) && (!c.tileState)))) {
-//				character.characterPosition = character.characterPosition.add(character.characterVelocity);
-//				character.setX(character.characterPosition.getX());
-//				character.setY(character.characterPosition.getY());
-//			//}
-//			}
 			
 			character.characterPosition = character.characterPosition.add(character.characterVelocity);
 			
@@ -299,6 +295,38 @@ public class Model extends Thread {
 												character.characterPosition = character.characterPosition.add(new Vector3D(0, (int) collisionRect.getHeight(), 0));
 											} else {
 												character.characterPosition = character.characterPosition.add(new Vector3D(0, - (int) collisionRect.getHeight(), 0));
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					for (Spectre spectre : spectres){
+						if (chunk.getBoundingBox().intersects(spectre.getBoundingBox())){
+							/*
+							 * Calculate the local bounding box for the player within the rectangle
+							 */
+							Rectangle spectreRect = spectre.getBoundingBox();
+							spectreRect.move((int) (spectreRect.getX() - chunk.getBoundingBox().getX()), (int) (spectreRect.getY() - chunk.getBoundingBox().getY()));
+							for (int x = 0; x < Chunk.CHUNKDIMENSION; x++){
+								for (int y = 0; y < Chunk.CHUNKDIMENSION; y++){
+									if (chunk.getTiles()[x][y] == Chunk.WALL){ 
+										Rectangle tileRect = new Rectangle(x * Chunk.WALLDIMENSION, y * Chunk.WALLDIMENSION, Chunk.WALLDIMENSION, Chunk.WALLDIMENSION);
+										if (spectreRect.intersects(tileRect)){
+											Rectangle collisionRect = tileRect.intersection(spectreRect);
+											if (collisionRect.getHeight() > collisionRect.getWidth()){
+												if (collisionRect.getX() == spectreRect.getX()){
+													spectre.spectrePosition = spectre.spectrePosition.add(new Vector3D((int) collisionRect.getWidth(), 0, 0));
+												} else {
+													spectre.spectrePosition = spectre.spectrePosition.add(new Vector3D(- (int) collisionRect.getWidth(), 0, 0));
+												}
+											} else {
+												if (collisionRect.getY() == spectreRect.getY()){
+													spectre.spectrePosition = spectre.spectrePosition.add(new Vector3D(0, (int) collisionRect.getHeight(), 0));
+												} else {
+													spectre.spectrePosition = spectre.spectrePosition.add(new Vector3D(0, - (int) collisionRect.getHeight(), 0));
+												}
 											}
 										}
 									}

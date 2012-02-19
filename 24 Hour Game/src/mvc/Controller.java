@@ -113,8 +113,19 @@ public class Controller extends Thread {
 				if (keysPressed[Keyboard.KEY_DOWN]){
 					
 				}
-			}
-			if (keysPressed[Keyboard.KEY_SPACE]){
+				/*
+				 * Attack/knockback key
+				 */
+				if (keysPressed[Keyboard.KEY_SPACE]){
+					Vector3D charDir = new Vector3D(0, moveSensitivity, 0).multiply(new Vector3D(0, 0, 1).rotationM((float) (model.character.rot * Math.PI / 180)));
+					for (Spectre spectre : model.spectres){
+						Vector3D toSpectre = model.character.characterPosition.subtract(spectre.spectrePosition);
+						if (spectre.spectrePosition.subtract(model.character.characterPosition).length() <= 35 && toSpectre.dotProduct(charDir) < 0){
+							spectre.spectreVelocity = spectre.spectrePosition.subtract(model.character.characterPosition).normalize().scale(2f);
+						}
+					}
+				}
+			} else if (keysPressed[Keyboard.KEY_SPACE]){
 				view.splashMode = false;
 				view.viewTranslation = model.character.characterPosition.add(new Vector3D(15, 15, 50));
 			}
