@@ -30,6 +30,10 @@ public abstract class Sprite{
 		idIncrementor++;
 	}
 	
+	public int getId(){
+		return uniqueId;
+	}
+	
 	public boolean equals(Sprite sprite){
 		return uniqueId == sprite.uniqueId;
 	}
