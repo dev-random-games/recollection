@@ -116,7 +116,7 @@ public class Controller extends Thread {
 				/*
 				 * Attack/knockback key
 				 */
-				if (keysPressed[Keyboard.KEY_SPACE]){
+				if (keysPressed[Keyboard.KEY_SPACE] && Model.win == -1){
 					Vector3D charDir = new Vector3D(0, moveSensitivity, 0).multiply(new Vector3D(0, 0, 1).rotationM((float) (model.character.rot * Math.PI / 180)));
 					for (Spectre spectre : model.spectres){
 						Vector3D toSpectre = model.character.characterPosition.subtract(spectre.spectrePosition);
