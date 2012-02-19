@@ -54,7 +54,7 @@ public class View extends Thread {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 800;
-	public static final int INITDISTANCE = 250;	//Initial distance of view from z=0
+	public static final int INITDISTANCE = 1000;	//Initial distance of view from z=0
 	
 	// If true and available, full screen mode will be used.
 	private static final boolean FULLSCREENENABLED = false;
@@ -113,7 +113,7 @@ public class View extends Thread {
 		 * Calculate camera velocity from user input, focal point and residue 
 		 * then add it to the view translation.
 		 */
-		this.characterHover = model.characterPosition;
+		this.characterHover = model.character.characterPosition;
 		this.characterHover.setZ(INITDISTANCE);
 		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add((characterHover.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION)));
 		this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);

@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 public class MultiSprite extends Sprite {
 	
-	private HashMap<String, Sprite> sprites;
+	HashMap<String, Sprite> sprites;
 	
 	private Sprite curSprite;	//Current sprite;
 	

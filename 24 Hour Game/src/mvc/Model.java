@@ -32,6 +32,7 @@ public class Model extends Thread {
 
 	public ArrayList<Sprite> sprites;
 	public ArrayList<Light> lights;
+	public Character character;
 	
 	/*
 	 * audio files
@@ -45,10 +46,6 @@ public class Model extends Thread {
 	
 	Rtree rtree;
 	
-	Vector3D characterVelocity, characterPosition;
-	float characterSensitivity;
-	
-	MultiSprite character = new MultiSprite(new TextureSprite(0, 0, 16, 16, 1, "/data/char/standing.png"), "standing");
 	Chunk[][] chunks;
 	
 	public Model() {
@@ -56,12 +53,9 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		characterVelocity = new Vector3D(0, 0, 0);
-		characterPosition = new Vector3D(0, 0, 0);
+		character = new Character(new TextureSprite(0, 0, 16, 16, 10, "/data/char/standing.png"), "standing");
 		
 		sprites.add(character);
-
-		characterSensitivity = 0.8f;
 		
 		chunks = new Chunk[0][0];
 
@@ -164,10 +158,10 @@ public class Model extends Thread {
 	 */
 	public void run() {
 		while (true) {
-			characterVelocity = characterVelocity.scale(characterSensitivity);
-			characterPosition = characterPosition.add(characterVelocity);
-			character.setX(characterPosition.getX());
-			character.setY(characterPosition.getY());
+			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
+			character.characterPosition = character.characterPosition.add(character.characterVelocity);
+			character.setX(character.characterPosition.getX());
+			character.setY(character.characterPosition.getY());
 //			this.viewTranslation = this.viewTranslation.add(tShis.cameraVelocity);
 			
 

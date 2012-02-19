@@ -28,6 +28,9 @@ public class Controller extends Thread {
 	
 	boolean[] keysPressed;
 	
+	float rotSensitivity;
+	float moveSensitivity;
+	
 	public Controller(Model model, View view){
 		this.model = model;
 		this.view = view;
@@ -40,6 +43,9 @@ public class Controller extends Thread {
 		keysPressed = new boolean[255];
 		
 		mouseDown = false;
+		
+		rotSensitivity = 2f;
+		moveSensitivity = 1;
 	}
 	
 	public void run(){
@@ -74,29 +80,32 @@ public class Controller extends Thread {
 				mouseReleased(Mouse.getX(), Mouse.getY());
 			}
 			
-			if (keysPressed[Keyboard.KEY_W]){
-				model.characterVelocity = model.characterVelocity.add(new Vector3D(0, 1, 0));
-			}
-			if (keysPressed[Keyboard.KEY_A]){
-				model.characterVelocity = model.characterVelocity.add(new Vector3D(-1, 0, 0));
-			}
-			if (keysPressed[Keyboard.KEY_S]){
-				model.characterVelocity = model.characterVelocity.add(new Vector3D(0, -1, 0));
-			}
-			if (keysPressed[Keyboard.KEY_D]){
-				model.characterVelocity = model.characterVelocity.add(new Vector3D(1, 0, 0));
-			}
-			if (keysPressed[Keyboard.KEY_LEFT]){
-//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(-1, 0, 0));
-			}
 			if (keysPressed[Keyboard.KEY_UP]){
-//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, 1, 0));
+				System.out.println(model.character.rot);
+				Vector3D movementVector = new Vector3D(0, 1, 0);
+				Vector3D up = new Vector3D(0, 0, 1);
+				model.character.characterVelocity = model.character.characterVelocity.add(movementVector.multiply(up.rotationM((float) (model.character.rot * Math.PI / 180))));
 			}
+//			if (keysPressed[Keyboard.KEY_A]){
+//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(-1, 0, 0));
+//			}
+//			if (keysPressed[Keyboard.KEY_S]){
+//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, -1, 0));
+//			}
+//			if (keysPressed[Keyboard.KEY_D]){
+//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(1, 0, 0));
+//			}
+			if (keysPressed[Keyboard.KEY_LEFT]){
+				model.character.setRot(model.character.rot + rotSensitivity);
+			}
+//			iSf (keysPressed[Keyboard.KEY_UP]){
+//				model.character.characterVelocity = model.character.characterVelocity.add(new Vector3D(0, 1, 0));
+//			}
 			if (keysPressed[Keyboard.KEY_RIGHT]){
-//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(1, 0, 0));
+				model.character.setRot(model.character.rot - rotSensitivity);
 			}
 			if (keysPressed[Keyboard.KEY_DOWN]){
-//				view.cameraVelocity = view.cameraVelocity.add(new Vector3D(0, -1, 0));
+				
 			}
 			if (keysPressed[Keyboard.KEY_E]){
 				model.creepyTales.playAsSoundEffect(1.0f, 1.0f, false);
