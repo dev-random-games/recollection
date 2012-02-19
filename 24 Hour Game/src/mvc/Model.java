@@ -55,7 +55,7 @@ public class Model extends Thread {
 		lights = new ArrayList<Light>();
 		rtree = new Rtree(2);
 		
-		character = new Character(new TextureSprite(0, 0, 16, 16, 10, "/data/char/standing.png"), "standing");
+		character = new Character(new TextureSprite(20, 20, 16, 16, 10, "/data/char/standing.png"), "standing");
 		
 		sprites.add(character);
 		
@@ -173,9 +173,24 @@ public class Model extends Thread {
 	public void run() {
 		while (true) {
 			character.characterVelocity = character.characterVelocity.scale(character.characterSensitivity);
-			character.characterPosition = character.characterPosition.add(character.characterVelocity);
-			character.setX(character.characterPosition.getX());
-			character.setY(character.characterPosition.getY());
+//			Character tempCharacter = new Character(null, null);
+//			Vector3D tempCharacterPosition = character.characterPosition.add(character.characterVelocity);
+//			tempCharacter.characterPosition = tempCharacterPosition;
+			ArrayList<Sprite> interChar = rtree.getIntersectingSprites(character);
+			boolean intersecting = false;
+			
+			Vector3D tempPosition = character.characterPosition.add(character.characterVelocity);
+			
+			Chunk c = chunks[Math.abs((int) tempPosition.getX() / Chunk.CHUNKDIMENSION)][Math.abs((int) tempPosition.getY() / Chunk.CHUNKDIMENSION)];
+			int inChunkX = (int) tempPosition.getX() % Chunk.CHUNKDIMENSION;
+			int inChunkY = (int) tempPosition.getY() % Chunk.CHUNKDIMENSION;
+			if (!(((c.tilesA[inChunkX][inChunkY] == 1) && c.tileState) || 
+					((c.tilesB[inChunkX][inChunkY] == 1) && (!c.tileState)))) {
+				character.characterPosition = character.characterPosition.add(character.characterVelocity);
+				character.setX(character.characterPosition.getX());
+				character.setY(character.characterPosition.getY());
+			}
+
 //			this.viewTranslation = this.viewTranslation.add(tShis.cameraVelocity);
 			
 
@@ -194,6 +209,9 @@ public class Model extends Thread {
 					}
 				}
 			}
+			
+			//ArrayList<Sprite> interChar = rtree.getIntersectingSprites(character);
+			
 			
 			try {
 				Thread.sleep(10);
