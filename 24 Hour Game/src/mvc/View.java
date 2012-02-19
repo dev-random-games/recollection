@@ -26,6 +26,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -297,6 +298,13 @@ public class View extends Thread {
 	
 	public void rollCredits() throws InterruptedException {
 		splashMode = true;
+		
+		try {
+			AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/credits-song-1.ogg")).playAsMusic(1.0f, 1.0f, false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		viewTranslation = new Vector3D(-9500, -9500, SPLASHDISTANCE);
 		Thread.sleep(5000);
