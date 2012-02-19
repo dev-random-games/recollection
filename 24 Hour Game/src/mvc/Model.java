@@ -130,9 +130,9 @@ public class Model extends Thread {
 //		sprites.add(spectre);
 		
 //		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
-		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
+//		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
-//		character.characterPosition = new Vector3D(1675, 590, 10);
+		character.characterPosition = new Vector3D(1675, 590, 10);
 
 		Light light = new Light();
 

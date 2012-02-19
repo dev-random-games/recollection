@@ -10,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -34,6 +35,7 @@ public class Controller extends Thread {
 	
 	float rotSensitivity;
 	float moveSensitivity;
+	private Audio intro;
 	
 	public Controller(Model model, View view){
 		this.model = model;
@@ -51,9 +53,21 @@ public class Controller extends Thread {
 		
 		rotSensitivity = 2f;
 		moveSensitivity = .06f;
+		
+		intro = null;
 	}
 	
 	public void run(){
+		
+		try {
+			this.intro = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/intro-music-0.ogg"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		intro.playAsMusic(1.0f, 1.0f, true);
+
+		
 		while (true){
 			try {
 				Thread.sleep(10);
@@ -138,6 +152,7 @@ public class Controller extends Thread {
 				view.viewTranslation = new Vector3D(-9500, -9500, view.SPLASHDISTANCE);
 				try {
 					Thread.sleep(3000);
+					intro.stop();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
