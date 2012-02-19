@@ -78,6 +78,7 @@ public class View extends Thread {
 	public static final float FOCALPOINTATTRACTION = 0.01f;
 	Vector3D cameraVelocity;
 	Vector3D focalPoint;
+	Vector3D characterHover;
 	
 	@SuppressWarnings("deprecation")
 	public View(Model model){
@@ -112,7 +113,9 @@ public class View extends Thread {
 		 * Calculate camera velocity from user input, focal point and residue 
 		 * then add it to the view translation.
 		 */
-		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add(this.focalPoint.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION));
+		this.characterHover = model.characterPosition;
+		this.characterHover.setZ(INITDISTANCE);
+		this.cameraVelocity = (this.cameraVelocity.scale(CAMERAVELOCITYPRESERVATION)).add((characterHover.subtract(this.viewTranslation).scale(FOCALPOINTATTRACTION)));
 		this.viewTranslation = this.viewTranslation.add(this.cameraVelocity);
 		
 		float whRatio = (float) WIDTH / (float) HEIGHT;
