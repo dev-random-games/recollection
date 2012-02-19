@@ -31,6 +31,7 @@ public class MultiSprite extends Sprite {
 	public void setSprite(String spriteName){
 		if (sprites.containsKey(spriteName)){
 			curSprite = sprites.get(spriteName);
+			curSpriteName = spriteName;
 		} else {
 			System.err.println("Error: could not find sprite " + spriteName);
 		}

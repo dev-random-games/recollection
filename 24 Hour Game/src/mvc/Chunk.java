@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -30,12 +31,16 @@ public class Chunk extends Sprite{
 	
 	Hashtable<String, Boolean> entrySwitches;	//Changes to other chunks that will change when this one is entered
 	
+//	private Audio entrySound;
+	private boolean soundPlayed = false;
+	
 	/*
 	 * Definitions of tile values
 	 */
 	public static final int STONE = 0;
 	public static final int WALL = 1;
-	public static final int BLOOD = 2;
+	public static final int BLOOD = 3;
+	public static final int GRADIENT = 2;
 	
 	/*
 	 * Buffered sprites for drawing tiles
@@ -43,10 +48,11 @@ public class Chunk extends Sprite{
 	private Sprite wallSprite;
 	private Sprite stoneSprite;
 	private Sprite bloodSprite;
+	private Sprite gradientSprite;
 	
 	int x, y;
 	
-	private HashMap<String, String> properties;
+	Hashtable<String, String> properties;
 	
 	public Chunk(int x, int y){
 		id();
@@ -60,8 +66,10 @@ public class Chunk extends Sprite{
 //		wallSprite = new TextureExtrudeSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 1000, "data/textures/stone.png");
 		stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/stone.png");
 		bloodSprite = new TextureSprite(0, 0,WALLDIMENSION, WALLDIMENSION, 0, "/data/scenery/blood" + new Random().nextInt(4) + ".png");
+		gradientSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/gradient.png");
 		
 		entrySwitches = new Hashtable<String, Boolean>();
+		properties = new Hashtable<String, String>();
 	}
 	
 	@Override
@@ -77,6 +85,11 @@ public class Chunk extends Sprite{
 		} else {
 			tiles = tilesB;
 		}
+		
+		if (properties.containsKey("floorTex")){
+			stoneSprite = new TextureSprite(0, 0, WALLDIMENSION, WALLDIMENSION, 0, "/data/textures/" + properties.get("floorTex") + ".png");
+		}
+		
 		for (int x = 0; x < CHUNKDIMENSION; x++){
 			for (int y = 0; y < CHUNKDIMENSION; y++){
 				int tile = tiles[x][y];
@@ -137,6 +150,11 @@ public class Chunk extends Sprite{
 						tilesA[x][CHUNKDIMENSION - 1 - y] = WALL;	// Y implemented to eliminate vertical flip from BufferedImage->openGL y conversion
 					} else if (red == 255 && blue == 0 && green == 0){
 						tilesA[x][CHUNKDIMENSION - 1 - y] = BLOOD;
+					} else if (red == 255 && blue == 255 && green == 0){
+						Spectre spectre = new Spectre(new TextureSprite(x * WALLDIMENSION + this.x, (CHUNKDIMENSION - y) * WALLDIMENSION + this.y, 30, 30, 10, "/data/char/spectre.png"), "default");
+						System.out.println("SPECTRE: " + spectre.spectrePosition.getX() + ", " + spectre.spectrePosition.getY());
+						Model.spectres.add(spectre);
+						Model.sprites.add(spectre);
 					}
 				}
 			}
@@ -184,6 +202,27 @@ public class Chunk extends Sprite{
 	 * Activate all switches for the current location
 	 */
 	public void activateSwitches(Chunk[][] chunks){
+		
+		/*
+		 * Play sound if not already played
+		 */
+		if (!soundPlayed && properties.containsKey("playSound")){
+			soundPlayed = true;
+			try {
+				Model.background = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/" + properties.get("playSound") + ".ogg"));
+				Model.background.playAsSoundEffect(1.0f, 1.0f, false);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (properties.containsKey("stopSound")){
+			if (Model.background != null){
+				Model.background.stop();
+			}
+		}
+		
 		/*
 		 * Iterating through a HashMap is complicated.
 		 * This sets the x value for each sprite in sprites.
