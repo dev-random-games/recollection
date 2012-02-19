@@ -204,14 +204,7 @@ public class View extends Thread {
 	@SuppressWarnings("deprecation")
 	public void run(){
 		
-		if (model.win >= 0 && model.character.health <= 0) {
-			try {
-				rollCredits();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		System.out.println("HEALTHY 2: " + model.character.health);
 		
 		/*
 		 * Create a new display, which all of the GL11 commands will be applied to.
@@ -257,6 +250,11 @@ public class View extends Thread {
 				}
 			}
 			
+			if (model.character.health <= 0 && !splashMode) {
+				System.out.println("CREDITS");
+				new Credits(this).start();
+			}
+			
 			setCamera(); // *DO NOT CHANGE THIS*
 			float viewScale = 1;
 			Rectangle viewRect = new Rectangle((int) (viewTranslation.getX() - WIDTH * viewScale / 2), (int) (viewTranslation.getY() - HEIGHT * viewScale / 2),
@@ -296,26 +294,26 @@ public class View extends Thread {
 	}
 	
 	
-	public void rollCredits() throws InterruptedException {
-		splashMode = true;
-		
-		try {
-			AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/credits-song-1.ogg")).playAsMusic(1.0f, 1.0f, false);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		viewTranslation = new Vector3D(-9500, -9500, SPLASHDISTANCE);
-		Thread.sleep(5000);
-		viewTranslation = new Vector3D(6610, 4950, SPLASHDISTANCE);
-		Thread.sleep(5000);
-		viewTranslation = new Vector3D(14610, 4950, SPLASHDISTANCE);
-		Thread.sleep(5000);
-		viewTranslation = new Vector3D(10610, 4950, SPLASHDISTANCE);
-		Thread.sleep(5000);
-		
-		AL.destroy();
-		System.exit(0);
-	}
+//	public void rollCredits() throws InterruptedException {
+//		splashMode = true;
+//		
+//		try {
+//			AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/credits-song-1.ogg")).playAsMusic(1.0f, 1.0f, false);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		viewTranslation = new Vector3D(-9500, -9500, SPLASHDISTANCE);
+//		Thread.sleep(5000);
+//		viewTranslation = new Vector3D(6610, 4950, SPLASHDISTANCE);
+//		Thread.sleep(5000);
+//		viewTranslation = new Vector3D(14610, 4950, SPLASHDISTANCE);
+//		Thread.sleep(5000);
+//		viewTranslation = new Vector3D(10610, 4950, SPLASHDISTANCE);
+//		Thread.sleep(5000);
+//		
+//		AL.destroy();
+//		System.exit(0);
+//	}
 }

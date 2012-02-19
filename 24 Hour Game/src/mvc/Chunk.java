@@ -229,7 +229,7 @@ public class Chunk extends Sprite{
 		if (properties.containsKey("win")){
 			if (Model.win == -1){
 				Model.win = 1000;
-				Spectre.speed = .02f;
+				Spectre.speed = .05f;
 				Spectre.strength = 5;
 			}
 		}

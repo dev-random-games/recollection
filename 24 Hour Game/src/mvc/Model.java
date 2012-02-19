@@ -130,9 +130,9 @@ public class Model extends Thread {
 //		sprites.add(spectre);
 		
 //		System.out.println(chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 80);
-//		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
+		character.characterPosition = new Vector3D(50, chunks[0].length * Chunk.CHUNKDIMENSION * Chunk.WALLDIMENSION - 60, 10);
 //		character.characterPosition = new Vector3D(32 * 15 + 25 * 15, 14 * 15, 10);
-		character.characterPosition = new Vector3D(1675, 590, 10);
+//		character.characterPosition = new Vector3D(1675, 590, 10);
 
 		Light light = new Light();
 
@@ -244,7 +244,7 @@ public class Model extends Thread {
 				spectre.spectreVelocity = spectre.spectreVelocity.scale(.9f);
 				spectre.setX(spectre.spectrePosition.getX());
 				spectre.setY(spectre.spectrePosition.getY());
-				if (spectre.spectrePosition.subtract(character.characterPosition).length() <= 15){
+				if (spectre.spectrePosition.subtract(character.characterPosition).length() <= 15 && character.health >= 0){
 					character.hurt(spectre.getDamage());
 					character.characterVelocity = character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(2f);
 					try {
@@ -253,9 +253,9 @@ public class Model extends Thread {
 						e.printStackTrace();
 					}
 					System.out.println("Health: " + character.health);
-					if (character.health <= 0){
-						System.exit(0);
-					}
+//					if (character.health <= 0){
+//						System.exit(0);
+//					}
 				}
 				Vector3D toPlayer = character.characterPosition.subtract(spectre.spectrePosition);
 				spectre.setRot((float) (- Math.atan2(toPlayer.getX(), toPlayer.getY()) * 180 / Math.PI));
