@@ -132,54 +132,54 @@ public class TextureExtrudeSprite extends Sprite{
 		 * Draw outline
 		 */
 		
-		GL11.glColor3f(0, 0, 0);
-		
-		/*
-		 * Front
-		 */
-		GL11.glBegin(GL11.GL_LINE_LOOP);
-		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
-		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
-		GL11.glEnd();
-		/*
-		 * Bottom
-		 */
-		GL11.glBegin(GL11.GL_LINE_STRIP);
-		GL11.glVertex3f(p.getX(), p.getY(), 0);
-
-		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY(), 0);
-		GL11.glEnd();
-		/*
-		 * Top
-		 */
-		GL11.glBegin(GL11.GL_LINE_STRIP);
-		GL11.glVertex3f(p.getX(), p.getY() + h, 0);
-		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY() + h, 0);
-		GL11.glEnd();
-		/*
-		 * Left
-		 */
-		GL11.glBegin(GL11.GL_LINE_STRIP);
-		GL11.glVertex3f(p.getX(), p.getY(), 0);
-		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
-		GL11.glVertex3f(p.getX(), p.getY() + h, 0);
-		GL11.glEnd();
-		/*
-		 * Right
-		 */
-		GL11.glBegin(GL11.GL_LINE_STRIP);
-		GL11.glVertex3f(p.getX() + w, p.getY(), 0);
-		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
-		GL11.glVertex3f(p.getX() + w, p.getY() + h, 0);
-		GL11.glEnd();
+//		GL11.glColor3f(0, 0, 0);
+//		
+//		/*
+//		 * Front
+//		 */
+//		GL11.glBegin(GL11.GL_LINE_LOOP);
+//		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
+//		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
+//		GL11.glEnd();
+//		/*
+//		 * Bottom
+//		 */
+//		GL11.glBegin(GL11.GL_LINE_STRIP);
+//		GL11.glVertex3f(p.getX(), p.getY(), 0);
+//
+//		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY(), 0);
+//		GL11.glEnd();
+//		/*
+//		 * Top
+//		 */
+//		GL11.glBegin(GL11.GL_LINE_STRIP);
+//		GL11.glVertex3f(p.getX(), p.getY() + h, 0);
+//		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY() + h, 0);
+//		GL11.glEnd();
+//		/*
+//		 * Left
+//		 */
+//		GL11.glBegin(GL11.GL_LINE_STRIP);
+//		GL11.glVertex3f(p.getX(), p.getY(), 0);
+//		GL11.glVertex3f(p.getX(), p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX(), p.getY() + h, p.getZ());
+//		GL11.glVertex3f(p.getX(), p.getY() + h, 0);
+//		GL11.glEnd();
+//		/*
+//		 * Right
+//		 */
+//		GL11.glBegin(GL11.GL_LINE_STRIP);
+//		GL11.glVertex3f(p.getX() + w, p.getY(), 0);
+//		GL11.glVertex3f(p.getX() + w, p.getY(), p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY() + h, p.getZ());
+//		GL11.glVertex3f(p.getX() + w, p.getY() + h, 0);
+//		GL11.glEnd();
 		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}

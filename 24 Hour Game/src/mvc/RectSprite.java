@@ -39,10 +39,10 @@ public class RectSprite extends Sprite{
 		GL11.glColor3f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
 		
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
-		GL11.glVertex3f(- p.getX() / 2, - p.getY() / 2, 0);
-		GL11.glVertex3f(p.getX() / 2, - p.getY() / 2, 0);
-		GL11.glVertex3f(p.getX() / 2, p.getY() / 2, 0);
-		GL11.glVertex3f(- p.getX() / 2, p.getY() / 2, 0);
+		GL11.glVertex3f(- w / 2, - h / 2, 0);
+		GL11.glVertex3f(w / 2, - h / 2, 0);
+		GL11.glVertex3f(w / 2, h / 2, 0);
+		GL11.glVertex3f(- w / 2, h / 2, 0);
 		GL11.glEnd();
 		
 		/*
@@ -51,10 +51,10 @@ public class RectSprite extends Sprite{
 		GL11.glColor3f(0, 0, 0);
 		
 		GL11.glBegin(GL11.GL_LINE_LOOP);
-		GL11.glVertex3f(- p.getX() / 2, - p.getY() / 2, 0);
-		GL11.glVertex3f(p.getX() / 2, - p.getY() / 2, 0);
-		GL11.glVertex3f(p.getX() / 2, p.getY() / 2, 0);
-		GL11.glVertex3f(- p.getX() / 2, p.getY() / 2, 0);
+		GL11.glVertex3f(- w / 2, - h / 2, 0);
+		GL11.glVertex3f(w / 2, - h / 2, 0);
+		GL11.glVertex3f(w / 2, h / 2, 0);
+		GL11.glVertex3f(- w / 2, h / 2, 0);
 		GL11.glEnd();
 		
 		GL11.glPopMatrix();
