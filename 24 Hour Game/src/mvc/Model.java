@@ -50,6 +50,7 @@ public class Model extends Thread {
 	Chunk[][] chunks;
 	
 	boolean rtreeGen = false;
+	public static int rumble = 0; 	//Enable an EARTHQUAKE for *rumble* frames
 	
 	public Model() {
 		sprites = new ArrayList<Sprite>();
