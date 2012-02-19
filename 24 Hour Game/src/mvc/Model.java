@@ -186,13 +186,13 @@ public class Model extends Thread {
 			rtree = newTree;
 			rtreeGen = true;
 			
-			for (Chunk[] chunkSublist : chunks){
-				for (Chunk chunk : chunkSublist){
-					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
-						System.out.println(chunk.getId());
-					}
-				}
-			}
+//			for (Chunk[] chunkSublist : chunks){
+//				for (Chunk chunk : chunkSublist){
+//					if (chunk.getBoundingBox().intersects(character.getBoundingBox())){
+//						System.out.println(chunk.getId());
+//					}
+//				}
+//			}
 			
 			try {
 				Thread.sleep(10);
