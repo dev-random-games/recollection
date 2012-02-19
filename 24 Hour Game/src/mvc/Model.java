@@ -258,7 +258,7 @@ public class Model extends Thread {
 					}
 				}
 				Vector3D toPlayer = character.characterPosition.subtract(spectre.spectrePosition);
-				spectre.setRot((float) Math.atan2(toPlayer.getX(), toPlayer.getY()));
+				spectre.setRot((float) (- Math.atan2(toPlayer.getX(), toPlayer.getY()) * 180 / Math.PI));
 //				System.out.println(spectre.spectreVelocity.toString());
 			}
 			
