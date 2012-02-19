@@ -41,7 +41,7 @@ public class ChunkLoader {
 				
 				int chunkWidth = Chunk.WALLDIMENSION * Chunk.CHUNKDIMENSION;
 				
-				Chunk newChunk = new Chunk(col * chunkWidth, row * chunkWidth).loadChunk(path + nameSplit[0] + ".png");
+				Chunk newChunk = new Chunk(col * chunkWidth, (rows - row - 1) * chunkWidth).loadChunk(path + nameSplit[0] + ".png");
 				
 				chunks[col][row] = newChunk;
 				
@@ -53,7 +53,7 @@ public class ChunkLoader {
 					 */
 					for (String entrySwitch : entrySwitches){
 						String[] entryNameSplit = entrySwitch.split("->");
-						newChunk.entrySwitches.put(entryNameSplit[0], !entryNameSplit.equals("B"));	//Default to chunk version A
+						newChunk.entrySwitches.put(entryNameSplit[0], entryNameSplit[1].equals("A"));	//Default to chunk version A
 					}
 				}
 				

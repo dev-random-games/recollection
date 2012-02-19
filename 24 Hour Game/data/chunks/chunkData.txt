@@ -1,5 +1,5 @@
 2
 2
 
-chunk_test:0_1->B chunk_test
-chunk_test:0_0->B chunk_test
+chunk_ending:0_1->B chunk_ending:1_1->B
+chunk_ending:1_0->B chunk_ending:0_1->A
