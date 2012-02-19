@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -237,14 +238,21 @@ public class Model extends Thread {
 				spectre.spectreVelocity = spectre.spectreVelocity.scale(.9f);
 				spectre.setX(spectre.spectrePosition.getX());
 				spectre.setY(spectre.spectrePosition.getY());
-				if (spectre.spectrePosition.subtract(character.characterPosition).length() <= 25){
+				if (spectre.spectrePosition.subtract(character.characterPosition).length() <= 15){
 					character.hurt(spectre.getDamage());
 					character.characterVelocity = character.characterPosition.subtract(spectre.spectrePosition).normalize().scale(2f);
+					try {
+						AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("/data/audio/effects/grunt-" + new Random().nextInt(3) + ".ogg")).playAsSoundEffect(1.0f, 1.0f, false);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					System.out.println("Health: " + character.health);
 					if (character.health <= 0){
 						System.exit(0);
 					}
 				}
+				Vector3D toPlayer = character.characterPosition.subtract(spectre.spectrePosition);
+				spectre.setRot((float) Math.atan2(toPlayer.getX(), toPlayer.getY()));
 //				System.out.println(spectre.spectreVelocity.toString());
 			}
 			
