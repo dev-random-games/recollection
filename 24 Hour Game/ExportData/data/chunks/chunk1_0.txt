@@ -1,0 +1,11 @@
+# mtPaint layers
+1
+0
+chunk_base.png
+Background
+1
+0
+0
+0
+-1
+100
