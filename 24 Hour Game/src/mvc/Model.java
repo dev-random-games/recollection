@@ -114,7 +114,7 @@ public class Model extends Thread {
 		
 //		sprites.add(testChunk);
 		
-		chunks = ChunkLoader.loadChunks("/data/chunks/", "chunkData.txt", sprites);
+		chunks = new ChunkLoader().loadChunks("/data/chunks/", "chunkData.txt", sprites);
 		
 		sprites.add(new TextureSprite(14000, 4000, 1600, 1200, 1, "/data/misc/dylan.png"));
 		sprites.add(new TextureSprite(6000, 4000, 1600, 1200, 1, "/data/misc/michael.png"));

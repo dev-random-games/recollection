@@ -9,6 +9,10 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class ChunkLoader {
 	
+	public ChunkLoader(){
+		
+	}
+	
 	public static String getNextLine(BufferedReader in){
 		String line = "";
 		while (line.equals("") && line != null){
@@ -21,7 +25,7 @@ public class ChunkLoader {
 		return line;
 	}
 	
-	public static Chunk[][] loadChunks(String path, String dataFile, ArrayList<Sprite> sprites){
+	public Chunk[][] loadChunks(String path, String dataFile, ArrayList<Sprite> sprites){
 		
 		/*
 		 * Load da data file bro
